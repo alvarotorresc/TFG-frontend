@@ -8,14 +8,16 @@ import {
   Image,
   Icon,
 } from "semantic-ui-react";
+import "./Landing.css";
+import { Link } from "react-router-dom";
 
 export default function Landing() {
   return (
-    <div>
+    <div className="Landing">
       <Header
         as="h1"
         style={{
-          marginTop: "100px",
+          paddingTop: "50px",
           fontSize: "80px",
         }}
       >
@@ -45,16 +47,19 @@ export default function Landing() {
                 researchers
               </p>
               <Grid.Column textAlign="center">
-                <Button size="huge" basic color="black">
-                  Check Them Out
-                  <Icon className="hand point right" />
-                </Button>
+                <Link to="/phenomena">
+                  <Button size="huge" basic color="black">
+                    Check Them Out
+                    <Icon className="hand point right" />
+                  </Button>
+                </Link>
               </Grid.Column>
             </Grid.Column>
             <Grid.Column floated="right" width={6}>
               <Image
                 bordered
                 rounded
+                centered
                 size="large"
                 src="https://cdn.pixabay.com/photo/2016/07/02/12/21/eclipse-1492818_960_720.jpg"
               />
@@ -72,10 +77,12 @@ export default function Landing() {
                 See our researchers
               </Header>
               <Grid.Column textAlign="center">
-                <Button icon labelPosition="right" basic color="black">
-                  Go there
-                  <Icon className="user secret" />
-                </Button>
+                <Link to="/researchers">
+                  <Button icon labelPosition="right" basic color="black">
+                    Go there
+                    <Icon className="user secret" />
+                  </Button>
+                </Link>
               </Grid.Column>
               <Image
                 centered
@@ -86,12 +93,14 @@ export default function Landing() {
             </Grid.Column>
             <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
               <Header as="h3" style={{ fontSize: "2em" }}>
-                Read our posts about the phenomena
+                Read our posts
               </Header>
-              <Button icon labelPosition="right" basic color="black">
-                Go there
-                <Icon className="newspaper outline" />
-              </Button>
+              <Link to="/posts">
+                <Button icon labelPosition="right" basic color="black">
+                  Go there
+                  <Icon className="newspaper outline" />
+                </Button>
+              </Link>
               <Image
                 centered
                 rounded
