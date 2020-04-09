@@ -7,45 +7,31 @@ function FixedMenuLayout() {
 
   return (
     <Menu inverted borderless fluid>
-      <Link to="/">
-        <Menu.Item name="Home" onClick={() => setactive("home")}>
+      <Link to="/ ">
+        <Menu.Item
+          name="Home"
+          onClick={() => setactive("home")}
+          style={{ padding: "30%" }}
+        >
           <img src="logo192.png" alt="logo" />
         </Menu.Item>
       </Link>
 
-      <Menu.Item>
-        <Link to="/researchers">
-          <Menu.Item
-            name="Researchers"
-            active={active === "researchers"}
-            onClick={() => setactive("researchers")}
-          >
-            Researchers
-          </Menu.Item>
+      <Menu.Item active={active === "researchers"}>
+        <Link to="/researchers" onClick={() => setactive("researchers")}>
+          Researchers
         </Link>
       </Menu.Item>
 
-      <Menu.Item style={{ margin: "-29px" }}>
-        <Link to="/posts">
-          <Menu.Item
-            name="Posts"
-            active={active === "posts"}
-            onClick={() => setactive("posts")}
-          >
-            Posts
-          </Menu.Item>
+      <Menu.Item active={active === "posts"}>
+        <Link to="/posts" onClick={() => setactive("posts")}>
+          Posts
         </Link>
       </Menu.Item>
 
-      <Menu.Item>
-        <Link to="/phenomena">
-          <Menu.Item
-            name="Phenomena"
-            active={active === "phenomena"}
-            onClick={() => setactive("phenomena")}
-          >
-            Phenomena
-          </Menu.Item>
+      <Menu.Item active={active === "phenomena"}>
+        <Link to="/phenomena" onClick={() => setactive("phenomena")}>
+          Phenomena
         </Link>
       </Menu.Item>
 
