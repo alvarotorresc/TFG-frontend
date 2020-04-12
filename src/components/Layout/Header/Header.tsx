@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, Button } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 function FixedMenuLayout() {
@@ -37,9 +37,7 @@ function FixedMenuLayout() {
 
       <Menu.Menu position="right">
         <Menu.Item>
-          <Link to="/signin">
-            <Button>Log-in</Button>
-          </Link>
+          <Link to="/signin">Log-In</Link>
         </Menu.Item>
       </Menu.Menu>
     </Menu>
