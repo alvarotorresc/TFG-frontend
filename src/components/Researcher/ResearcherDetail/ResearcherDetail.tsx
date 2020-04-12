@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import researcher from "../../../models/researcher";
-import { Grid, Header, Icon, Image, Label } from "semantic-ui-react";
-import Researcher from "../Researcher/Researcher";
-import { parse } from "path";
+import { Grid, Header, Icon, Image } from "semantic-ui-react";
 
 const RESEARCHER_QUERY = gql`
   query getResearcher($idR: Int!) {
