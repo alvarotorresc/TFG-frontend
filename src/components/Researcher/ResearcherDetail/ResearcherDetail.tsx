@@ -53,7 +53,6 @@ export default function ResearcherDetail() {
 
   if (researcher["getResearcher"]) {
     const {
-      id,
       firstName,
       lastName,
       email,

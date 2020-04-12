@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment, Loader, Dimmer, Image, Grid } from "semantic-ui-react";
+import { Segment, Loader, Dimmer, Grid } from "semantic-ui-react";
 
 export default function Loading() {
   return (
