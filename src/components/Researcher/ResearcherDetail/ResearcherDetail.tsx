@@ -1,36 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
-import researcher from "../../../models/researcher";
+import { useQuery } from "@apollo/client";
 import { Grid, Header, Icon, Image } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
-
-const RESEARCHER_QUERY = gql`
-  query getResearcher($idR: Int!) {
-    getResearcher(id: $idR) {
-      id
-      firstName
-      lastName
-      email
-      age
-      rol
-      nationality
-      image
-    }
-  }
-`;
-
-type AppProps = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  rol: string;
-  nationality: string;
-  image: string;
-  researcher: researcher;
-};
+import { RESEARCHER_QUERY } from "../Researcher.types";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
