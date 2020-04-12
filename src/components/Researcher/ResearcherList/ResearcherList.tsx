@@ -1,36 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Grid, Header, Icon } from "semantic-ui-react";
-import researcher from "../../../models/researcher";
 import Researcher from "../Researcher/Researcher";
 import Loading from "../../Layout/Loading/Loading";
-
-const RESEARCHERS_QUERY = gql`
-  query getResearchers {
-    getResearchers {
-      id
-      firstName
-      lastName
-      email
-      age
-      rol
-      nationality
-      image
-    }
-  }
-`;
-
-type AppProps = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  rol: string;
-  nationality: string;
-  image: string;
-  researcher: researcher;
-};
+import { ResearcherProps, RESEARCHERS_QUERY } from "../Researcher.types";
 
 export default function ResearcherList() {
   const { data, loading, error, refetch } = useQuery(RESEARCHERS_QUERY);
@@ -64,7 +37,7 @@ export default function ResearcherList() {
                 rol,
                 nationality,
                 image,
-              }: AppProps) => {
+              }: ResearcherProps) => {
                 return (
                   <Researcher
                     key={id}

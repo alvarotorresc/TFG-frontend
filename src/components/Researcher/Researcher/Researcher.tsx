@@ -1,16 +1,6 @@
 import React from "react";
-import { Card, Icon } from "semantic-ui-react";
+import { Card, Icon, CardProps } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
-type CardProps = {
-  id: number;
-  name: string;
-  email: string;
-  age: number;
-  rol: string;
-  image: string;
-  nationality: string;
-};
 
 function extra(email: string) {
   return (
