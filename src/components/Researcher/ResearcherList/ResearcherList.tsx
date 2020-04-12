@@ -5,7 +5,7 @@ import researcher from "../../../models/researcher";
 import Researcher from "../Researcher/Researcher";
 
 const RESEARCHERS_QUERY = gql`
-  {
+  query getResearchers {
     getResearchers {
       id
       firstName
