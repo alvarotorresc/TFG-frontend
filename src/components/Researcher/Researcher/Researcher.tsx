@@ -8,6 +8,7 @@ type CardProps = {
   email: string;
   age: number;
   rol: string;
+  image: string;
   nationality: string;
 };
 
@@ -40,10 +41,11 @@ export default function Researcher({
   age,
   rol,
   nationality,
+  image,
 }: CardProps) {
   return (
     <Card
-      image="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
+      image={image}
       header={nameLink(name, id)}
       meta={rol}
       description={`This researcher is ${age} and is ${nationality}`}

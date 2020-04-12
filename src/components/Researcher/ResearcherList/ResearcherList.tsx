@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 import { Grid, Header, Icon } from "semantic-ui-react";
 import researcher from "../../../models/researcher";
 import Researcher from "../Researcher/Researcher";
+import Loading from "../../Layout/Loading/Loading";
 
 const RESEARCHERS_QUERY = gql`
   query getResearchers {
@@ -14,6 +15,7 @@ const RESEARCHERS_QUERY = gql`
       age
       rol
       nationality
+      image
     }
   }
 `;
@@ -26,6 +28,7 @@ type AppProps = {
   age: number;
   rol: string;
   nationality: string;
+  image: string;
   researcher: researcher;
 };
 
@@ -40,7 +43,7 @@ export default function ResearcherList() {
     refetch();
   }, [data, loading, refetch]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
   if (researchers["getResearchers"])
     return (
@@ -60,6 +63,7 @@ export default function ResearcherList() {
                 email,
                 rol,
                 nationality,
+                image,
               }: AppProps) => {
                 return (
                   <Researcher
@@ -69,6 +73,7 @@ export default function ResearcherList() {
                     email={email}
                     age={age}
                     rol={rol}
+                    image={image}
                     nationality={nationality}
                   />
                 );

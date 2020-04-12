@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import researcher from "../../../models/researcher";
 import { Grid, Header, Icon, Image } from "semantic-ui-react";
+import Loading from "../../Layout/Loading/Loading";
 
 const RESEARCHER_QUERY = gql`
   query getResearcher($idR: Int!) {
@@ -14,6 +15,7 @@ const RESEARCHER_QUERY = gql`
       age
       rol
       nationality
+      image
     }
   }
 `;
@@ -26,6 +28,7 @@ type AppProps = {
   age: number;
   rol: string;
   nationality: string;
+  image: string;
   researcher: researcher;
 };
 
@@ -45,7 +48,7 @@ export default function ResearcherDetail() {
     }
   }, [id, data, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
 
   if (researcher["getResearcher"]) {
@@ -57,6 +60,7 @@ export default function ResearcherDetail() {
       age,
       rol,
       nationality,
+      image,
     } = researcher.getResearcher;
     return (
       <div>
@@ -67,7 +71,7 @@ export default function ResearcherDetail() {
           <Grid.Row>
             <Grid.Column width={8}>
               <Image
-                src="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
+                src={image}
                 label={{
                   color: "black",
                   corner: "right",
