@@ -45,6 +45,7 @@ export default function PhenomenaList() {
                       <Card.Content style={{ fontSize: "25px" }} extra={true}>
                         <Image
                           floated="right"
+                          circular
                           size="tiny"
                           src={researcher.image}
                           as="a"
