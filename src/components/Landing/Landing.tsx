@@ -17,7 +17,7 @@ export default function Landing() {
       <Header
         as="h1"
         style={{
-          paddingTop: "50px",
+          paddingTop: "100px",
           fontSize: "80px",
         }}
       >

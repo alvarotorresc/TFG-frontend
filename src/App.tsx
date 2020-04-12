@@ -7,21 +7,38 @@ import ResearcherList from "./components/Researcher/ResearcherList/ResearcherLis
 import PhenomenaList from "./components/Phenomena/PhenomenaList/PhenomenaList";
 import PostList from "./components/Post/PostList/PostList";
 import LoginForm from "./components/Auth/SignIn/SignIn";
+import ResearcherDetail from "./components/Researcher/ResearcherDetail/ResearcherDetail";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: "http://localhost:5000/graphql",
+  }),
+});
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter basename="/">
-        <Header />
-        <Switch>
-          <Route path="/researchers" component={ResearcherList}></Route>
-          <Route path="/phenomena" component={PhenomenaList}></Route>
-          <Route path="/posts" component={PostList}></Route>
-          <Route path="/" component={Landing}></Route>
-          <Route path="/signin" component={LoginForm}></Route>
-        </Switch>
-      </BrowserRouter>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <BrowserRouter basename="/">
+          <Header />
+          <Switch>
+            <Route path="/signin" component={LoginForm}></Route>
+            <Route path="/researchers/:id" component={ResearcherDetail}></Route>
+            <Route path="/researchers" component={ResearcherList}></Route>
+            <Route path="/phenomena" component={PhenomenaList}></Route>
+            <Route path="/posts" component={PostList}></Route>
+            <Route path="/" component={Landing}></Route>
+          </Switch>
+        </BrowserRouter>
+      </div>
+    </ApolloProvider>
   );
 }
 
