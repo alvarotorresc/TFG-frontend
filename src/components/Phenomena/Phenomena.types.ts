@@ -7,6 +7,7 @@ query getPhenomena {
     id
     description
     type
+    title
     researcher {
       id
       firstName
@@ -17,8 +18,33 @@ query getPhenomena {
 }
 `
 
+export const PHENOMENON_QUERY = gql`
+  query getPhenomenon($idR: Int!) {
+    getPhenomenon(id: $idR) {
+      id
+      title
+      description
+      type
+      researcher {
+        id
+        firstName
+        lastName
+      }
+      ocurrences {
+        id
+        date
+        ubication
+        description
+        witness
+        resolved
+      }
+    }
+  }
+`;
+
 export type PhenomenaProps = {
   id: string
+  title: string
   description: string
   type: string
   researcher: researcher

@@ -13,7 +13,7 @@ function FixedMenuLayout() {
           onClick={() => setactive("home")}
           style={{ padding: "30%" }}
         >
-          <img src="logo192.png" alt="logo" />
+          <img src="/logo192.png" alt="logo" />
         </Menu.Item>
       </Link>
 

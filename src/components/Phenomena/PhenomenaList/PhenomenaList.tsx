@@ -3,11 +3,25 @@ import { useQuery } from "@apollo/client";
 import { PHENOMENA_QUERY, PhenomenaProps } from "../Phenomena.types";
 import Loading from "../../Layout/Loading/Loading";
 import { Grid, Header, Icon, Card, Image } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 function capitalize(string: string) {
   return string.replace(/\w\S*/g, function (word) {
     return word.charAt(0) + word.slice(1).toLowerCase();
   });
+}
+
+function nameLink(name: string, id: number) {
+  return (
+    <div>
+      <Link
+        to={{ pathname: `/phenomena/${id} ` }}
+        style={{ fontSize: "25px", color: "black" }}
+      >
+        {name}
+      </Link>
+    </div>
+  );
 }
 
 export default function PhenomenaList() {
@@ -33,7 +47,13 @@ export default function PhenomenaList() {
         <Grid style={{ padding: "4%" }} columns={2} stackable>
           <Grid.Row>
             {phenomena.getPhenomena.map(
-              ({ id, description, type, researcher }: PhenomenaProps) => {
+              ({
+                id,
+                description,
+                type,
+                researcher,
+                title,
+              }: PhenomenaProps) => {
                 return (
                   <Grid.Column width={8} key={id}>
                     <Card
@@ -52,7 +72,9 @@ export default function PhenomenaList() {
                           href={`http://localhost:3000/researchers/${researcher.id}`}
                           target="_blank"
                         />
-                        <Card.Header>Steve Sanders</Card.Header>
+                        <Card.Header>
+                          {nameLink(title, parseInt(id))}
+                        </Card.Header>
                         <Card.Meta
                           style={{ marginTop: "10px", fontSize: "20px" }}
                         >

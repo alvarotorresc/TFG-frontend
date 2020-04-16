@@ -14,6 +14,7 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
+import PhenomenonDetail from "./components/Phenomena/PhenomenonDetail/PhenomenonDetail";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -29,6 +30,7 @@ function App() {
         <BrowserRouter basename="/">
           <Header />
           <Switch>
+            <Route path="/phenomena/:id" component={PhenomenonDetail}></Route>
             <Route path="/signin" component={LoginForm}></Route>
             <Route path="/researchers/:id" component={ResearcherDetail}></Route>
             <Route path="/researchers" component={ResearcherList}></Route>
