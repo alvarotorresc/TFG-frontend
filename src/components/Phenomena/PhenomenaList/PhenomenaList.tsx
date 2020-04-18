@@ -26,13 +26,14 @@ function nameLink(name: string, id: number) {
 
 export default function PhenomenaList() {
   const [phenomena, setPhenomena] = useState<any>(Object);
-  const { data, loading, error } = useQuery(PHENOMENA_QUERY);
+  const { data, loading, error, refetch } = useQuery(PHENOMENA_QUERY);
 
   useEffect(() => {
     if (!loading && data) {
       setPhenomena(data);
     }
-  }, [data, loading]);
+    refetch();
+  }, [data, loading, refetch]);
 
   if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
