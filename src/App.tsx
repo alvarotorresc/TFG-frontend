@@ -8,14 +8,13 @@ import PhenomenaList from "./components/Phenomena/PhenomenaList/PhenomenaList";
 import PostList from "./components/Post/PostList/PostList";
 import LoginForm from "./components/Auth/SignIn/SignIn";
 import ResearcherDetail from "./components/Researcher/ResearcherDetail/ResearcherDetail";
+import PhenomenonDetail from "./components/Phenomena/PhenomenonDetail/PhenomenonDetail";
 import {
   ApolloClient,
   HttpLink,
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
-import PhenomenonDetail from "./components/Phenomena/PhenomenonDetail/PhenomenonDetail";
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({

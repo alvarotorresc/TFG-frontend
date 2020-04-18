@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { PHENOMENON_QUERY } from "../Phenomena.types";
+import { PHENOMENON_QUERY, OcurrencesProps } from "../Phenomena.types";
 import Loading from "../../Layout/Loading/Loading";
 import { Header, Icon, Grid, Image, Divider } from "semantic-ui-react";
-
-type OcurrencesProps = {
-  id: string;
-  date: Date;
-};
+import Ocurrence from "../Ocurrence/Ocurrence";
 
 export default function PhenomenonDetail() {
   let { id } = useParams();
@@ -35,6 +31,9 @@ export default function PhenomenonDetail() {
       researcher,
       ocurrences,
     } = phenomenon.getPhenomenon;
+
+    const isOcurrences = phenomenon.getPhenomenon.ocurrences.length;
+    console.log(isOcurrences);
 
     return (
       <div>
@@ -74,16 +73,27 @@ export default function PhenomenonDetail() {
           <Divider horizontal style={{ fontSize: "30px" }}>
             Ocurrences
           </Divider>
-          <Grid.Row centered>
-            {ocurrences.map((ocurrence: OcurrencesProps) => {
+          {isOcurrences === 0 ? (
+            <Grid.Row centered style={{ minHeight: "85px" }}>
+              <h1>There are not ocurrences yet</h1>
+            </Grid.Row>
+          ) : (
+            ocurrences.map((ocurrence: OcurrencesProps) => {
               return (
-                <div>
-                  <p>{ocurrence.date}</p>
-                  <p>{ocurrence.id}</p>
-                </div>
+                <Grid.Row centered stretched>
+                  <Ocurrence
+                    id={ocurrence.id}
+                    date={ocurrence.date}
+                    ubication={ocurrence.ubication}
+                    witness={ocurrence.witness}
+                    resolved={ocurrence.resolved}
+                    description={ocurrence.description}
+                    key={ocurrence.id}
+                  />
+                </Grid.Row>
               );
-            })}
-          </Grid.Row>
+            })
+          )}
         </Grid>
       </div>
     );

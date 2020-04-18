@@ -49,3 +49,12 @@ export type PhenomenaProps = {
   type: string
   researcher: researcher
 }
+
+export type OcurrencesProps = {
+  id: string,
+  date: Date,
+  ubication: JSON,
+  description: string,
+  witness: boolean,
+  resolved: boolean
+}
