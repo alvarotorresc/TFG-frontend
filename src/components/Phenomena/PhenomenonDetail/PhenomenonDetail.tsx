@@ -11,7 +11,7 @@ export default function PhenomenonDetail() {
   id = String(id);
   let idR = parseInt(id);
   const [phenomenon, setPhenomenon] = useState(Object);
-  const { data, loading, error } = useQuery(PHENOMENON_QUERY, {
+  const { data, loading, error, refetch } = useQuery(PHENOMENON_QUERY, {
     variables: { idR },
   });
 
@@ -19,7 +19,8 @@ export default function PhenomenonDetail() {
     if (!loading && data) {
       setPhenomenon(data);
     }
-  }, [id, data, loading]);
+    refetch();
+  }, [id, data, loading, refetch]);
 
   if (loading) return <Loading />;
   if (error) return <p>Error :</p>;

@@ -11,7 +11,7 @@ export default function ResearcherDetail() {
   let idR = parseInt(id);
 
   const [researcher, setresearcher] = useState(Object);
-  const { data, loading, error } = useQuery(RESEARCHER_QUERY, {
+  const { data, loading, error, refetch } = useQuery(RESEARCHER_QUERY, {
     variables: { idR },
   });
 
@@ -19,7 +19,8 @@ export default function ResearcherDetail() {
     if (!loading && data) {
       setresearcher(data);
     }
-  }, [id, data, loading]);
+    refetch();
+  }, [id, data, loading, refetch]);
 
   if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
