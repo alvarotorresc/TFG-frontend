@@ -6,4 +6,5 @@ export default interface researcher {
     age: number
     nationality: string
     rol: string
+    image: string
 }

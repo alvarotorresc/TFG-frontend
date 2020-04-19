@@ -8,13 +8,13 @@ import PhenomenaList from "./components/Phenomena/PhenomenaList/PhenomenaList";
 import PostList from "./components/Post/PostList/PostList";
 import LoginForm from "./components/Auth/SignIn/SignIn";
 import ResearcherDetail from "./components/Researcher/ResearcherDetail/ResearcherDetail";
+import PhenomenonDetail from "./components/Phenomena/PhenomenonDetail/PhenomenonDetail";
 import {
   ApolloClient,
   HttpLink,
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -29,6 +29,7 @@ function App() {
         <BrowserRouter basename="/">
           <Header />
           <Switch>
+            <Route path="/phenomena/:id" component={PhenomenonDetail}></Route>
             <Route path="/signin" component={LoginForm}></Route>
             <Route path="/researchers/:id" component={ResearcherDetail}></Route>
             <Route path="/researchers" component={ResearcherList}></Route>
