@@ -37,6 +37,7 @@ export default function ResearcherList() {
                 rol,
                 nationality,
                 image,
+                phenomena,
               }: ResearcherProps) => {
                 return (
                   <Researcher
@@ -48,6 +49,7 @@ export default function ResearcherList() {
                     rol={rol}
                     image={image}
                     nationality={nationality}
+                    phenomena={phenomena}
                   />
                 );
               }

@@ -11,6 +11,7 @@ export type ResearcherProps = {
   nationality: string;
   image: string;
   researcher: researcher;
+  phenomena: []
 };
 
 export type CardProps = {
@@ -21,6 +22,7 @@ export type CardProps = {
   rol: string;
   image: string;
   nationality: string;
+  phenomena: []
 };
 
 export const RESEARCHERS_QUERY = gql`
@@ -34,6 +36,10 @@ export const RESEARCHERS_QUERY = gql`
       rol
       nationality
       image
+      phenomena{
+        id
+        description
+      }
     }
   }
 `;
