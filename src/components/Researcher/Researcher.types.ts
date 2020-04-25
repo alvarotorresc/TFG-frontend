@@ -55,6 +55,43 @@ export const RESEARCHER_QUERY = gql`
       rol
       nationality
       image
+      phenomena {
+        id
+        title
+      }
+    }
+  }
+`;
+
+enum Rol {
+  ADMIN = "ADMIN",
+  RESEARCHER = "RESEARCHER",
+}
+
+export const ADD_RESEARCHER = gql`
+  mutation addResearcher(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+    $nationality: String!
+    $age: Int!
+    $rol: Rol!
+    $image: String!
+  ) {
+    createResearcher(
+      data: {
+        firstName: $firstName
+        lastName: $lastName
+        email: $email
+        password: $password
+        nationality: $nationality
+        age: $age
+        rol: $rol
+        image: $image
+      }
+    ) {
+      id
     }
   }
 `;

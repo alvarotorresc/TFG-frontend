@@ -1,0 +1,33 @@
+.radioImage {
+  max-width: 100px;
+}
+
+#grid {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 3%;
+}
+
+.input {
+  margin: 1rem;
+  width: 70%;
+  text-align: center;
+}
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  text-align: center;
+}
