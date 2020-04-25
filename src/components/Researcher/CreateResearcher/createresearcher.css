@@ -8,6 +8,10 @@
   padding-top: 3%;
 }
 
+.error {
+  color: red;
+}
+
 .input {
   margin: 1rem;
   width: 70%;
