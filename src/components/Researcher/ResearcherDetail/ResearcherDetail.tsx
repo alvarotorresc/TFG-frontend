@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Grid, Header, Icon, Image } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
 import { RESEARCHER_QUERY } from "../Researcher.types";
+import "./detail.css";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
@@ -34,6 +35,7 @@ export default function ResearcherDetail() {
       rol,
       nationality,
       image,
+      phenomena,
     } = researcher.getResearcher;
     return (
       <div>
@@ -78,6 +80,25 @@ export default function ResearcherDetail() {
                 <Icon name="flag" />
                 {nationality}
               </p>
+              <h1>Phenomena Investigated </h1>
+              <div
+                className="divPheno"
+                style={{
+                  borderRadius: "20px",
+                  padding: "5px",
+                  color: "white",
+                }}
+              >
+                {phenomena.map((phenomenon: any) => {
+                  return (
+                    <Link to={`/phenomena/${phenomenon.id}`}>
+                      <p style={{ color: "white", fontStyle: "bold" }}>
+                        {phenomenon.title}
+                      </p>
+                    </Link>
+                  );
+                })}
+              </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>

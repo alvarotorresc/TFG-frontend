@@ -18,6 +18,14 @@ query getPhenomena {
 }
 `
 
+export const TYPES_QUERY = gql`
+query getPhenomenaTypes {
+    getPhenomena {
+    type
+}
+}
+`
+
 export const PHENOMENON_QUERY = gql`
   query getPhenomenon($idR: Int!) {
     getPhenomenon(id: $idR) {
@@ -38,6 +46,60 @@ export const PHENOMENON_QUERY = gql`
         witness
         resolved
       }
+    }
+  }
+`;
+
+enum Types {
+  APPARITION = "APPARITION",
+  PSYCHOPHONY = "PSYCHOPHONY",
+  HAUNTED_HOUSE = "HAUNTED_HOUSE",
+  REINCARNATION = "REINCARNATION",
+  TELEPATHY = "TELEPATHY",
+  TELEKINESIS = "TELEKINESIS",
+  UFOLOGY = "UFOLOGY",
+}
+
+export const CREATE_PHENOMENON = gql`
+  mutation createPhenomenon(
+    $researcherId: Int!
+    $title: String!
+    $description: String!
+    $type: Types!
+  ) {
+    createPhenomenon(
+      data: {
+        researcherId: $researcherId
+        title: $title
+        type: $type
+        description: $description
+      }
+    ) {
+      id
+    }
+  }
+`;
+
+export const CREATE_OCURRENCE = gql`
+  mutation createOcurrence(
+    $phenomenaId: Int!
+    $date: DateTime!
+    $description: String!
+    $ubication: JSON!
+    $witness: Boolean!
+    $resolved: Boolean!
+  ) {
+    createOcurrence(
+      data: {
+        phenomenaId: $phenomenaId
+        date: $date
+        ubication: $ubication
+        description: $description
+        witness: $witness
+        resolved: $resolved
+      }
+    ) {
+      id
     }
   }
 `;

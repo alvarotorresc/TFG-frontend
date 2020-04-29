@@ -9,6 +9,9 @@ import PostList from "./components/Post/PostList/PostList";
 import LoginForm from "./components/Auth/SignIn/SignIn";
 import ResearcherDetail from "./components/Researcher/ResearcherDetail/ResearcherDetail";
 import PhenomenonDetail from "./components/Phenomena/PhenomenonDetail/PhenomenonDetail";
+import CreateResearcher from "./components/Researcher/CreateResearcher/CreateResearcher";
+import CreatePhenomena from "./components/Phenomena/CreatePhenomena/CreatePhenomena";
+import CreateOcurrence from "./components/Phenomena/CreateOcurrence/CreateOcurrence";
 import {
   ApolloClient,
   HttpLink,
@@ -30,7 +33,7 @@ function App() {
           <Header />
           <Switch>
             <Route path="/phenomena/:id" component={PhenomenonDetail}></Route>
-            <Route path="/signin" component={LoginForm}></Route>
+            <Route path="/signin" component={CreateOcurrence}></Route>
             <Route path="/researchers/:id" component={ResearcherDetail}></Route>
             <Route path="/researchers" component={ResearcherList}></Route>
             <Route path="/phenomena" component={PhenomenaList}></Route>

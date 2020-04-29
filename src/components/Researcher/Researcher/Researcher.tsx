@@ -32,13 +32,14 @@ export default function Researcher({
   rol,
   nationality,
   image,
+  phenomena,
 }: CardProps) {
   return (
     <Card
       image={image}
       header={nameLink(name, id)}
-      meta={rol}
-      description={`This researcher is ${age} and is ${nationality}`}
+      meta={`${rol} - ${phenomena.length} phenomena ☢️`}
+      description={`This researcher is ${age} and is ${nationality} `}
       key={id}
       extra={extra(email)}
       centered
