@@ -9,6 +9,7 @@ import {
   UPDATE_RESEARCHER,
   RESEARCHER_QUERY,
 } from "../Researcher.types";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -31,6 +32,7 @@ export default function EditResearcher() {
   let { id } = useParams();
   id = String(id);
   let idR = parseInt(id);
+  let history = useHistory();
 
   const [updateResearcher] = useMutation(UPDATE_RESEARCHER);
   const [researcher, setresearcher] = useState(Object);
@@ -69,8 +71,8 @@ export default function EditResearcher() {
           ...values,
         },
       });
-      refetch();
       resetForm();
+      history.push("/researchers");
     },
   });
   return (

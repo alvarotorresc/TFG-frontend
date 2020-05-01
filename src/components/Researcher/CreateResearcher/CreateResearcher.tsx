@@ -5,6 +5,7 @@ import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { ADD_RESEARCHER, urlImages } from "../Researcher.types";
 import "./createresearcher.css";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -29,6 +30,7 @@ const validationSchema = Yup.object().shape({
 
 export default function CreateResearcher() {
   const [addResearcher] = useMutation(ADD_RESEARCHER);
+  let history = useHistory();
   const {
     handleBlur,
     handleChange,
@@ -56,6 +58,7 @@ export default function CreateResearcher() {
         },
       });
       resetForm();
+      history.push("/researchers");
     },
   });
 

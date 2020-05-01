@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_PHENOMENON, TYPES_QUERY } from "../Phenomena.types";
-import "./createphenomena.css";
-import { useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import {
+  UPDATE_PHENOMENA,
+  PHENOMENON_QUERY,
+  TYPES_QUERY,
+} from "../Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -23,55 +26,77 @@ const validationSchema = Yup.object().shape({
 let typeOptions: any[] = [];
 
 function useGetTypes(): void {
-  const { data, loading, refetch } = useQuery(TYPES_QUERY);
+  const { data, loading, error, refetch } = useQuery(TYPES_QUERY);
   if (!loading && data) {
     typeOptions = data.getPhenomena;
   }
   refetch();
 }
 
-export default function CreatePhenomena() {
+export default function EditPhenomena() {
   useGetTypes();
   let history = useHistory();
-  const [createPhenomenon] = useMutation(CREATE_PHENOMENON);
-  const {
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    values,
-    setFieldValue,
-    errors,
-  } = useFormik({
+
+  let { id } = useParams();
+  id = String(id);
+  let idR = parseInt(id);
+
+  const [updatePhenomenon] = useMutation(UPDATE_PHENOMENA);
+
+  const [phenomenon, setPhenomenon] = useState(Object);
+  const { data, loading, refetch } = useQuery(PHENOMENON_QUERY, {
+    variables: { idR },
+  });
+
+  useEffect(() => {
+    if (!loading && data) {
+      setPhenomenon(data);
+    }
+    refetch();
+  }, [id, data, loading, refetch]);
+
+  let description, title, type, researcherId, researcherFirst, researcherLast;
+
+  if (phenomenon["getPhenomenon"]) {
+    description = phenomenon.getPhenomenon.description;
+    title = phenomenon.getPhenomenon.title;
+    type = phenomenon.getPhenomenon.type;
+    id = phenomenon.getPhenomenon.id;
+    researcherId = phenomenon.getPhenomenon.researcher.id;
+    researcherFirst = phenomenon.getPhenomenon.researcher.firstName;
+    researcherLast = phenomenon.getPhenomenon.researcher.lastName;
+  }
+
+  const { handleBlur, handleChange, handleSubmit, values, errors } = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: "",
-      description: "",
-      researcherId: "",
-      type: "",
+      description: description,
+      title: title,
+      type: type,
+      researcherId: researcherId,
+      id: id,
     },
     validationSchema,
     onSubmit(values, { resetForm }) {
-      console.log(values);
-      createPhenomenon({
+      updatePhenomenon({
         variables: {
           ...values,
         },
       });
+      refetch();
       resetForm();
       history.push("/phenomena");
     },
   });
-
   return (
     <Grid centered textAlign="center" id="grid">
-      <h1>Create a new Phenomenon</h1>
+      <h1>Edit an existing Phenomenon</h1>
       <Form onSubmit={handleSubmit} size={"huge"}>
         <Input
-          type="number"
-          placeholder={"ID"}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.researcherId}
-          name="researcherId"
+          disabled
+          type="text"
+          value={`${researcherFirst} ${researcherLast}`}
+          name="researcherName"
           className="input"
         />
         <span className="error">
@@ -101,8 +126,6 @@ export default function CreatePhenomena() {
           {errors.description ? errors.description : null}
         </span>
         <br />
-
-        {console.log(typeOptions)}
         <select
           name="type"
           value={values.type}

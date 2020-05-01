@@ -104,6 +104,27 @@ export const CREATE_OCURRENCE = gql`
   }
 `;
 
+export const UPDATE_PHENOMENA = gql`
+  mutation updatePhenomenon(
+    $researcherId: Int!
+    $id: Int!
+    $title: String!
+    $description: String!
+    $type: Types!) {
+      updatePhenomenon(
+        id: $id,
+      phenomenon: {
+        researcherId: $researcherId
+        title: $title
+        type: $type
+        description: $description
+      }
+    ) {
+      id
+    }
+    }
+`
+
 export type PhenomenaProps = {
   id: string
   title: string

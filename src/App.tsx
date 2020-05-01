@@ -19,6 +19,8 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
+import EditPhenomena from "./components/Phenomena/EditPhenomena/EditPhenomena";
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -35,6 +37,7 @@ function App() {
           <Switch>
             <Route path="/researcher/edit/:id" component={EditResearcher} />
             <Route path="/researcher/create" component={CreateResearcher} />
+            <Route path="/phenomena/edit/:id" component={EditPhenomena} />
             <Route path="/phenomena/create" component={CreatePhenomena} />
             <Route path="/ocurrence/create" component={CreateOcurrence} />
             <Route path="/phenomena/:id" component={PhenomenonDetail} />
