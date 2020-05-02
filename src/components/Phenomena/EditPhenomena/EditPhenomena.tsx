@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
 let typeOptions: any[] = [];
 
 function useGetTypes(): void {
-  const { data, loading, error, refetch } = useQuery(TYPES_QUERY);
+  const { data, loading, refetch } = useQuery(TYPES_QUERY);
   if (!loading && data) {
     typeOptions = data.getPhenomena;
   }

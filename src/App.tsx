@@ -13,13 +13,13 @@ import CreateResearcher from "./components/Researcher/CreateResearcher/CreateRes
 import CreatePhenomena from "./components/Phenomena/CreatePhenomena/CreatePhenomena";
 import CreateOcurrence from "./components/Phenomena/CreateOcurrence/CreateOcurrence";
 import EditResearcher from "./components/Researcher/EditResearcher/EditResearcher";
+import EditPhenomena from "./components/Phenomena/EditPhenomena/EditPhenomena";
 import {
   ApolloClient,
   HttpLink,
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
-import EditPhenomena from "./components/Phenomena/EditPhenomena/EditPhenomena";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -41,12 +41,12 @@ function App() {
             <Route path="/phenomena/create" component={CreatePhenomena} />
             <Route path="/ocurrence/create" component={CreateOcurrence} />
             <Route path="/phenomena/:id" component={PhenomenonDetail} />
-            <Route path="/signin" component={CreateOcurrence}></Route>
-            <Route path="/researchers/:id" component={ResearcherDetail}></Route>
-            <Route path="/researchers" component={ResearcherList}></Route>
-            <Route path="/phenomena" component={PhenomenaList}></Route>
-            <Route path="/posts" component={PostList}></Route>
-            <Route path="/" component={Landing}></Route>
+            <Route path="/signin" component={LoginForm} />
+            <Route path="/researchers/:id" component={ResearcherDetail} />
+            <Route path="/researchers" component={ResearcherList} />
+            <Route path="/phenomena" component={PhenomenaList} />
+            <Route path="/posts" component={PostList} />
+            <Route path="/" component={Landing} />
           </Switch>
         </BrowserRouter>
       </div>

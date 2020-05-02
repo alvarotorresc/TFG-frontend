@@ -34,14 +34,7 @@ export default function CreatePhenomena() {
   useGetTypes();
   let history = useHistory();
   const [createPhenomenon] = useMutation(CREATE_PHENOMENON);
-  const {
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    values,
-    setFieldValue,
-    errors,
-  } = useFormik({
+  const { handleBlur, handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
       title: "",
       description: "",

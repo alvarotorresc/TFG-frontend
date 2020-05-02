@@ -15,7 +15,6 @@ export default function ResearcherList() {
   const [deleteResearcher] = useMutation(DELETE_RESEARCHER);
 
   function handleDelete(id: number) {
-    console.log("delete " + id);
     deleteResearcher({
       variables: {
         id,

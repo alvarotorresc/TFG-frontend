@@ -49,7 +49,7 @@ export const PHENOMENON_QUERY = gql`
     }
   }
 `;
-
+// eslint-disable-next-line
 enum Types {
   APPARITION = "APPARITION",
   PSYCHOPHONY = "PSYCHOPHONY",

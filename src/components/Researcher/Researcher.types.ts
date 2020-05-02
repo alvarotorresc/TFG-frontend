@@ -63,7 +63,7 @@ export const RESEARCHER_QUERY = gql`
     }
   }
 `;
-
+// eslint-disable-next-line
 enum Rol {
   ADMIN = "ADMIN",
   RESEARCHER = "RESEARCHER",
