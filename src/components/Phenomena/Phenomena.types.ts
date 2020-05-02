@@ -49,6 +49,24 @@ export const PHENOMENON_QUERY = gql`
     }
   }
 `;
+export const OCURRENCE_QUERY = gql`
+  query getOcurrence($idO: Int!) {
+    getOcurrence(id: $idO) {
+      id
+      date
+      ubication
+      description
+      witness
+      resolved
+      phenomena {
+        id
+        title
+      }
+    }
+  }
+
+`
+
 // eslint-disable-next-line
 enum Types {
   APPARITION = "APPARITION",
@@ -123,6 +141,32 @@ export const UPDATE_PHENOMENA = gql`
       id
     }
     }
+`
+
+export const UPDATE_OCURRENCE = gql`
+  mutation updateOcurrence(
+    $id: Int!
+    $phenomenaId: Int!
+    $date: DateTime!
+    $description: String!
+    $ubication: JSON!
+    $witness: Boolean!
+    $resolved: Boolean!
+  ) {
+    updateOcurrence (
+      id: $id,
+      ocurrence: {
+        phenomenaId: $phenomenaId
+        date: $date
+        ubication: $ubication
+        description: $description
+        witness: $witness
+        resolved: $resolved
+      }
+    ){
+      id
+    }
+  }
 `
 
 export type PhenomenaProps = {

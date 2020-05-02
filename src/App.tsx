@@ -14,6 +14,7 @@ import CreatePhenomena from "./components/Phenomena/CreatePhenomena/CreatePhenom
 import CreateOcurrence from "./components/Phenomena/CreateOcurrence/CreateOcurrence";
 import EditResearcher from "./components/Researcher/EditResearcher/EditResearcher";
 import EditPhenomena from "./components/Phenomena/EditPhenomena/EditPhenomena";
+import EditOcurrence from "./components/Phenomena/EditOcurrence/EditOcurrence";
 import {
   ApolloClient,
   HttpLink,
@@ -35,16 +36,17 @@ function App() {
         <BrowserRouter basename="/">
           <Header />
           <Switch>
-            <Route path="/researcher/edit/:id" component={EditResearcher} />
-            <Route path="/researcher/create" component={CreateResearcher} />
-            <Route path="/phenomena/edit/:id" component={EditPhenomena} />
-            <Route path="/phenomena/create" component={CreatePhenomena} />
-            <Route path="/ocurrence/create" component={CreateOcurrence} />
             <Route path="/phenomena/:id" component={PhenomenonDetail} />
-            <Route path="/signin" component={LoginForm} />
+            <Route path="/researcher/edit/:id" component={EditResearcher} />
             <Route path="/researchers/:id" component={ResearcherDetail} />
+            <Route path="/researcher/create" component={CreateResearcher} />
             <Route path="/researchers" component={ResearcherList} />
             <Route path="/phenomena" component={PhenomenaList} />
+            <Route path="/phenomenon/edit/:id" component={EditPhenomena} />
+            <Route path="/phenomenon/create" component={CreatePhenomena} />
+            <Route path="/ocurrence/create" component={CreateOcurrence} />
+            <Route path="/ocurrence/edit/:id" component={EditOcurrence} />
+            <Route path="/signin" component={LoginForm} />
             <Route path="/posts" component={PostList} />
             <Route path="/" component={Landing} />
           </Switch>
