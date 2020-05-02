@@ -1,15 +1,9 @@
-import React from "react";
-import { Card, Icon, CardProps } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Card, Icon, CardProps, Button, Confirm } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import "./researcher.css";
 
-function extra(email: string) {
-  return (
-    <div>
-      <Icon name="mail" />
-      {email}
-    </div>
-  );
-}
+let e = "e";
 
 function nameLink(name: string, id: number) {
   return (
@@ -33,7 +27,15 @@ export default function Researcher({
   nationality,
   image,
   phenomena,
+  handleDelete,
 }: CardProps) {
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  function deleteResearcher() {
+    handleDelete(id);
+    setOpen(false);
+  }
+
   return (
     <Card
       image={image}
@@ -41,7 +43,30 @@ export default function Researcher({
       meta={`${rol} - ${phenomena.length} phenomena ☢️`}
       description={`This researcher is ${age} and is ${nationality} `}
       key={id}
-      extra={extra(email)}
+      extra={
+        <div>
+          <Icon name="mail" />
+          {email}
+          {e === "e" && (
+            <div className="ui two buttons delete">
+              <Button
+                basic
+                color="red"
+                style={{ marginTop: "10px" }}
+                className="delete"
+                onClick={() => setOpen(!isOpen)}
+              >
+                Delete
+              </Button>
+              <Confirm
+                open={isOpen}
+                onCancel={() => setOpen(!isOpen)}
+                onConfirm={deleteResearcher}
+              />
+            </div>
+          )}
+        </div>
+      }
       centered
       style={{ marginTop: "0", marginBottom: "50px" }}
     />

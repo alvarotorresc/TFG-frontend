@@ -12,12 +12,16 @@ import PhenomenonDetail from "./components/Phenomena/PhenomenonDetail/Phenomenon
 import CreateResearcher from "./components/Researcher/CreateResearcher/CreateResearcher";
 import CreatePhenomena from "./components/Phenomena/CreatePhenomena/CreatePhenomena";
 import CreateOcurrence from "./components/Phenomena/CreateOcurrence/CreateOcurrence";
+import EditResearcher from "./components/Researcher/EditResearcher/EditResearcher";
+import EditPhenomena from "./components/Phenomena/EditPhenomena/EditPhenomena";
+import EditOcurrence from "./components/Phenomena/EditOcurrence/EditOcurrence";
 import {
   ApolloClient,
   HttpLink,
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -32,13 +36,19 @@ function App() {
         <BrowserRouter basename="/">
           <Header />
           <Switch>
-            <Route path="/phenomena/:id" component={PhenomenonDetail}></Route>
-            <Route path="/signin" component={CreateOcurrence}></Route>
-            <Route path="/researchers/:id" component={ResearcherDetail}></Route>
-            <Route path="/researchers" component={ResearcherList}></Route>
-            <Route path="/phenomena" component={PhenomenaList}></Route>
-            <Route path="/posts" component={PostList}></Route>
-            <Route path="/" component={Landing}></Route>
+            <Route path="/phenomena/:id" component={PhenomenonDetail} />
+            <Route path="/researcher/edit/:id" component={EditResearcher} />
+            <Route path="/researchers/:id" component={ResearcherDetail} />
+            <Route path="/researcher/create" component={CreateResearcher} />
+            <Route path="/researchers" component={ResearcherList} />
+            <Route path="/phenomena" component={PhenomenaList} />
+            <Route path="/phenomenon/edit/:id" component={EditPhenomena} />
+            <Route path="/phenomenon/create" component={CreatePhenomena} />
+            <Route path="/ocurrence/create" component={CreateOcurrence} />
+            <Route path="/ocurrence/edit/:id" component={EditOcurrence} />
+            <Route path="/signin" component={LoginForm} />
+            <Route path="/posts" component={PostList} />
+            <Route path="/" component={Landing} />
           </Switch>
         </BrowserRouter>
       </div>

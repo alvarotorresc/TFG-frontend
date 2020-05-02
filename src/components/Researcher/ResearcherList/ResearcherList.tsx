@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { Grid, Header, Icon } from "semantic-ui-react";
 import Researcher from "../Researcher/Researcher";
 import Loading from "../../Layout/Loading/Loading";
-import { ResearcherProps, RESEARCHERS_QUERY } from "../Researcher.types";
+import {
+  ResearcherProps,
+  RESEARCHERS_QUERY,
+  DELETE_RESEARCHER,
+} from "../Researcher.types";
 
 export default function ResearcherList() {
   const { data, loading, error, refetch } = useQuery(RESEARCHERS_QUERY);
   const [researchers, setResearchers] = useState<any>(Object);
+  const [deleteResearcher] = useMutation(DELETE_RESEARCHER);
+
+  function handleDelete(id: number) {
+    deleteResearcher({
+      variables: {
+        id,
+      },
+    });
+    refetch();
+  }
 
   useEffect(() => {
     if (!loading && data) {
@@ -50,6 +64,7 @@ export default function ResearcherList() {
                     image={image}
                     nationality={nationality}
                     phenomena={phenomena}
+                    handleDelete={handleDelete}
                   />
                 );
               }

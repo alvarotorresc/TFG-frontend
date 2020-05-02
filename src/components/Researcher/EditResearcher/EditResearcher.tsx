@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { ADD_RESEARCHER, urlImages } from "../Researcher.types";
-import "./createresearcher.css";
+import { useParams } from "react-router-dom";
+import {
+  urlImages,
+  UPDATE_RESEARCHER,
+  RESEARCHER_QUERY,
+} from "../Researcher.types";
 import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
@@ -17,10 +21,6 @@ const validationSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string()
-    .min(6, "Too Short!")
-    .max(20, "Too Long!")
-    .required("Required"),
   nationality: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
@@ -28,9 +28,31 @@ const validationSchema = Yup.object().shape({
   age: Yup.number().required("Required").positive("Positive"),
 });
 
-export default function CreateResearcher() {
-  const [addResearcher] = useMutation(ADD_RESEARCHER);
+export default function EditResearcher() {
+  let { id } = useParams();
+  id = String(id);
+  let idR = parseInt(id);
   let history = useHistory();
+
+  const [updateResearcher] = useMutation(UPDATE_RESEARCHER);
+  const [researcher, setresearcher] = useState(Object);
+  const { data, loading, refetch } = useQuery(RESEARCHER_QUERY, {
+    variables: { idR },
+  });
+
+  useEffect(() => {
+    if (!loading && data) {
+      setresearcher(data);
+    }
+    refetch();
+  }, [id, data, loading, refetch]);
+
+  let initialValues;
+
+  if (researcher["getResearcher"]) {
+    initialValues = Object.assign(researcher.getResearcher);
+  }
+
   const {
     handleBlur,
     handleChange,
@@ -39,20 +61,12 @@ export default function CreateResearcher() {
     setFieldValue,
     errors,
   } = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      nationality: "",
-      age: "",
-      rol: "RESEARCHER",
-      image: "https://semantic-ui.com/images/avatar/large/steve.jpg",
-    },
+    enableReinitialize: true,
+    initialValues: { ...initialValues },
     validationSchema,
     onSubmit(values, { resetForm }) {
       console.log(values);
-      addResearcher({
+      updateResearcher({
         variables: {
           ...values,
         },
@@ -61,7 +75,6 @@ export default function CreateResearcher() {
       history.push("/researchers");
     },
   });
-
   return (
     <Grid centered textAlign="center" id="grid">
       <h1>Create a new Researcher</h1>
@@ -101,18 +114,6 @@ export default function CreateResearcher() {
           className="input"
         />
         <span className="error">{errors.email ? errors.email : null}</span>
-        <Input
-          type="password"
-          placeholder={"Password"}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.password}
-          name="password"
-          className="input"
-        />
-        <span className="error">
-          {errors.password ? errors.password : null}
-        </span>
         <br />
         <Input
           type="text"
