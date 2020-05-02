@@ -134,3 +134,13 @@ export const UPDATE_RESEARCHER = gql`
       }
     }
 `
+
+export const DELETE_RESEARCHER = gql`
+  mutation deleteResearcher(
+    $id: Int!
+  ){
+    deleteResearcher(
+      id: $id
+    )
+  }
+`
