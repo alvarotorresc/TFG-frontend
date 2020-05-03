@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { PHENOMENA_QUERY, PhenomenaProps } from "../Phenomena.types";
+import { useQuery, useMutation } from "@apollo/client";
+import {
+  PHENOMENA_QUERY,
+  PhenomenaProps,
+  DELETE_PHENOMENON,
+} from "../Phenomena.types";
 import Loading from "../../Layout/Loading/Loading";
-import { Grid, Header, Icon, Card, Image } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-
-function capitalize(string: string) {
-  return string.replace(/\w\S*/g, function (word) {
-    return word.charAt(0) + word.slice(1).toLowerCase();
-  });
-}
-
-function nameLink(name: string, id: number) {
-  return (
-    <div>
-      <Link
-        to={{ pathname: `/phenomena/${id} ` }}
-        style={{ fontSize: "25px", color: "black" }}
-      >
-        {name}
-      </Link>
-    </div>
-  );
-}
+import { Grid, Header, Icon } from "semantic-ui-react";
+import Phenomenon from "../Phenomenon/Phenomenon";
 
 export default function PhenomenaList() {
   const [phenomena, setPhenomena] = useState<any>(Object);
   const { data, loading, error, refetch } = useQuery(PHENOMENA_QUERY);
+  const [deletePhenomenon] = useMutation(DELETE_PHENOMENON);
+
+  async function handleDelete(id: number) {
+    await deletePhenomenon({
+      variables: {
+        id,
+      },
+    });
+    refetch();
+  }
 
   useEffect(() => {
     if (!loading && data) {
@@ -56,38 +51,15 @@ export default function PhenomenaList() {
                 title,
               }: PhenomenaProps) => {
                 return (
-                  <Grid.Column width={8} key={id}>
-                    <Card
-                      centered
-                      fluid
-                      key={id}
-                      style={{ marginBottom: "3%", minHeight: "200px" }}
-                    >
-                      <Card.Content style={{ fontSize: "25px" }} extra={true}>
-                        <Image
-                          floated="right"
-                          circular
-                          size="tiny"
-                          src={researcher.image}
-                          as="a"
-                          href={`http://localhost:3000/researchers/${researcher.id}`}
-                          target="_blank"
-                        />
-                        <Card.Header>
-                          {nameLink(title, parseInt(id))}
-                        </Card.Header>
-                        <Card.Meta
-                          style={{ marginTop: "10px", fontSize: "20px" }}
-                        >
-                          {`${capitalize(type)} - ${researcher.firstName} ${
-                            researcher.lastName
-                          }`}
-                        </Card.Meta>
-                        <Card.Description style={{ marginTop: "45px" }}>
-                          {description}
-                        </Card.Description>
-                      </Card.Content>
-                    </Card>
+                  <Grid.Column width={8}>
+                    <Phenomenon
+                      id={id}
+                      description={description}
+                      type={type}
+                      researcher={researcher}
+                      title={title}
+                      handleDelete={handleDelete}
+                    ></Phenomenon>
                   </Grid.Column>
                 );
               }
