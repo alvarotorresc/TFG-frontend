@@ -14,35 +14,23 @@ import { Link } from "react-router-dom";
 export default function Landing() {
   return (
     <div className="Landing">
-      <Header
-        as="h1"
-        style={{
-          paddingTop: "100px",
-          fontSize: "80px",
-        }}
-      >
+      <Header as="h1" id="header">
         Welcome to PhenoAPP
       </Header>
-      <Container
-        text
-        style={{
-          fontSize: "30px",
-          color: "#383838",
-        }}
-      >
+      <Container text id="mainContainer">
         Is a full-stack app for my end-of-degree project made entirely with open
         source technologies and libraries Consist in a web app where you can see
         and manage paranormal phenomena around the world
       </Container>
 
-      <Segment style={{ padding: "8em 0em" }} vertical>
+      <Segment id="segment1" vertical>
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
             <Grid.Column width={8}>
-              <Header as="h3" style={{ fontSize: "2.7em" }}>
+              <Header as="h3" id="header1">
                 Strangest Phenomena of the World
               </Header>
-              <p style={{ fontSize: "1.6em" }}>
+              <p id="p1">
                 Our app manage the stangest phenomena of the world by the best
                 researchers
               </p>
@@ -69,11 +57,11 @@ export default function Landing() {
         </Grid>
       </Segment>
 
-      <Segment style={{ padding: "0em" }} vertical>
+      <Segment vertical id="segment2">
         <Grid celled="internally" columns="equal" stackable>
           <Grid.Row textAlign="center">
-            <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-              <Header as="h3" style={{ fontSize: "2em" }}>
+            <Grid.Column id="column1">
+              <Header as="h3" id="header2">
                 See our researchers
               </Header>
               <Grid.Column textAlign="center">
@@ -87,12 +75,12 @@ export default function Landing() {
               <Image
                 centered
                 rounded
-                style={{ width: "20%", marginTop: "10px" }}
+                className="imageLanding"
                 src="https://cdn.pixabay.com/photo/2019/11/19/22/24/watch-4638673_960_720.jpg"
               />
             </Grid.Column>
-            <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-              <Header as="h3" style={{ fontSize: "2em" }}>
+            <Grid.Column id="column1">
+              <Header as="h3" id="header2">
                 Read our posts
               </Header>
               <Link to="/posts">
@@ -104,7 +92,7 @@ export default function Landing() {
               <Image
                 centered
                 rounded
-                style={{ width: "20%", marginTop: "10px" }}
+                className="imageLanding"
                 src="https://cdn.pixabay.com/photo/2016/02/01/00/56/news-1172463_960_720.jpg"
               />
             </Grid.Column>
