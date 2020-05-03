@@ -6,13 +6,9 @@ function FixedMenuLayout() {
   const [active, setactive] = useState("home");
 
   return (
-    <Menu inverted borderless fluid>
+    <Menu inverted borderless fluid style={{ height: "20%", maxHeight: "20%" }}>
       <Link to="/ ">
-        <Menu.Item
-          name="Home"
-          onClick={() => setactive("home")}
-          style={{ padding: "30%" }}
-        >
+        <Menu.Item name="Home" onClick={() => setactive("home")}>
           <img src="/logo192.png" alt="logo" />
         </Menu.Item>
       </Link>
