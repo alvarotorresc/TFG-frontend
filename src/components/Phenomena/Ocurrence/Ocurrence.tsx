@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { OcurrencesProps } from "../Phenomena.types";
-import { Container, Card, Icon } from "semantic-ui-react";
+import { Container, Card, Icon, Button, Confirm } from "semantic-ui-react";
 import "./Ocurrence.css";
+
+let e = "e";
 
 function seeCorrectDate(date: Date) {
   let stringDate = String(date);
   let day = stringDate.substring(0, 10);
   let time = stringDate.substring(11, 16);
-  stringDate = `${day} ${time}`;
+  stringDate = `${day} /  ${time}h`;
   return stringDate;
 }
 
@@ -42,7 +44,15 @@ export default function Ocurrence({
   description,
   witness,
   resolved,
+  handleDelete,
 }: OcurrencesProps) {
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  function deleteOcurrence() {
+    handleDelete(id);
+    setOpen(false);
+  }
+
   return (
     <Container fluid style={{ minWidth: "100%" }}>
       <Card fluid raised key={id}>
@@ -55,7 +65,6 @@ export default function Ocurrence({
         <Card.Description>
           <p style={{ fontSize: "30px" }}>{description}</p>
         </Card.Description>
-        {seeCorrectJson(ubication)}
         <Card.Content extra>
           <div style={{ fontSize: "20px" }}>
             Are there witnesses? {seeCorrectBoolean(witness)}
@@ -63,7 +72,27 @@ export default function Ocurrence({
             {seeCorrectBoolean(resolved)}
           </div>
         </Card.Content>
-      </Card>{" "}
+        {e === "e" && (
+          <Card.Content extra>
+            <div className="ui two buttons delete">
+              <Button
+                basic
+                color="red"
+                style={{ marginTop: "10px" }}
+                className="delete"
+                onClick={() => setOpen(!isOpen)}
+              >
+                Delete
+              </Button>
+              <Confirm
+                open={isOpen}
+                onCancel={() => setOpen(!isOpen)}
+                onConfirm={deleteOcurrence}
+              />
+            </div>
+          </Card.Content>
+        )}
+      </Card>
     </Container>
   );
 }
