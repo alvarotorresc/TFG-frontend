@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Grid, Header, Icon, Image } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
-import { RESEARCHER_QUERY } from "../Researcher.types";
+import { RESEARCHER_QUERY } from "../utils/graphql/researcher.graphql";
 import "./detail.css";
 
 export default function ResearcherDetail() {

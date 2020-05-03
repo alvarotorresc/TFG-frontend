@@ -3,9 +3,10 @@ import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { ADD_RESEARCHER, urlImages } from "../Researcher.types";
+import { urlImages } from "../utils/researcher.utils";
 import "./createresearcher.css";
 import { useHistory } from "react-router-dom";
+import { ADD_RESEARCHER } from "../utils/graphql/researcher.graphql";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()

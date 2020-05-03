@@ -4,12 +4,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
+import { urlImages } from "../utils/researcher.utils";
+import { useHistory } from "react-router-dom";
 import {
-  urlImages,
   UPDATE_RESEARCHER,
   RESEARCHER_QUERY,
-} from "../Researcher.types";
-import { useHistory } from "react-router-dom";
+} from "../utils/graphql/researcher.graphql";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
