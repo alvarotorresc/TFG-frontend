@@ -169,12 +169,33 @@ export const UPDATE_OCURRENCE = gql`
   }
 `
 
+export const DELETE_PHENOMENON = gql`
+  mutation deletePhenomenon(
+    $id: Int!
+  ){
+    deletePhenomenon(
+      id: $id
+    )
+  }
+`
+
+export const DELETE_OCURRENCE = gql`
+  mutation deleteOcurrence(
+    $id: Int!
+  ){
+    deleteOcurrence(
+      id: $id
+    )
+  }
+`
+
 export type PhenomenaProps = {
   id: string
   title: string
   description: string
   type: string
   researcher: researcher
+  handleDelete: any
 }
 
 export type OcurrencesProps = {
@@ -184,4 +205,5 @@ export type OcurrencesProps = {
   description: string,
   witness: boolean,
   resolved: boolean
+  handleDelete: any
 }

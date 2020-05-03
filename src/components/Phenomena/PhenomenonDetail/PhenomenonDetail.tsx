@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { PHENOMENON_QUERY, OcurrencesProps } from "../Phenomena.types";
+import { useQuery, useMutation } from "@apollo/client";
+import {
+  PHENOMENON_QUERY,
+  OcurrencesProps,
+  DELETE_OCURRENCE,
+} from "../Phenomena.types";
 import Loading from "../../Layout/Loading/Loading";
 import { Header, Icon, Grid, Image, Divider } from "semantic-ui-react";
 import Ocurrence from "../Ocurrence/Ocurrence";
@@ -11,9 +15,19 @@ export default function PhenomenonDetail() {
   id = String(id);
   let idR = parseInt(id);
   const [phenomenon, setPhenomenon] = useState(Object);
+  const [deleteOcurrence] = useMutation(DELETE_OCURRENCE);
   const { data, loading, error, refetch } = useQuery(PHENOMENON_QUERY, {
     variables: { idR },
   });
+
+  async function handleDelete(id: number) {
+    await deleteOcurrence({
+      variables: {
+        id,
+      },
+    });
+    refetch();
+  }
 
   useEffect(() => {
     if (!loading && data) {
@@ -90,6 +104,7 @@ export default function PhenomenonDetail() {
                     resolved={ocurrence.resolved}
                     description={ocurrence.description}
                     key={ocurrence.id}
+                    handleDelete={handleDelete}
                   />
                 </Grid.Row>
               );

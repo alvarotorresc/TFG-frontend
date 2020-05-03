@@ -36,16 +36,16 @@ function App() {
         <BrowserRouter basename="/">
           <Header />
           <Switch>
-            <Route path="/phenomena/:id" component={PhenomenonDetail} />
+            <Route path="/phenomenon/edit/:id" component={EditPhenomena} />
+            <Route path="/ocurrence/edit/:id" component={EditOcurrence} />
             <Route path="/researcher/edit/:id" component={EditResearcher} />
+            <Route path="/phenomena/:id" component={PhenomenonDetail} />
             <Route path="/researchers/:id" component={ResearcherDetail} />
+            <Route path="/phenomenon/create" component={CreatePhenomena} />
+            <Route path="/ocurrence/create" component={CreateOcurrence} />
             <Route path="/researcher/create" component={CreateResearcher} />
             <Route path="/researchers" component={ResearcherList} />
             <Route path="/phenomena" component={PhenomenaList} />
-            <Route path="/phenomenon/edit/:id" component={EditPhenomena} />
-            <Route path="/phenomenon/create" component={CreatePhenomena} />
-            <Route path="/ocurrence/create" component={CreateOcurrence} />
-            <Route path="/ocurrence/edit/:id" component={EditOcurrence} />
             <Route path="/signin" component={LoginForm} />
             <Route path="/posts" component={PostList} />
             <Route path="/" component={Landing} />

@@ -14,8 +14,8 @@ export default function ResearcherList() {
   const [researchers, setResearchers] = useState<any>(Object);
   const [deleteResearcher] = useMutation(DELETE_RESEARCHER);
 
-  function handleDelete(id: number) {
-    deleteResearcher({
+  async function handleDelete(id: number) {
+    await deleteResearcher({
       variables: {
         id,
       },
