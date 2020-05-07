@@ -13,12 +13,6 @@ function seeCorrectDate(date: Date) {
   return stringDate;
 }
 
-function seeCorrectJson(jsonD: any) {
-  if (jsonD) {
-    return `${jsonD.lat}º - ${jsonD.lng}º   `;
-  }
-}
-
 function seeCorrectBoolean(bool: boolean) {
   if (bool) {
     return (

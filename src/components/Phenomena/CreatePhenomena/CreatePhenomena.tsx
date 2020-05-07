@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_PHENOMENON, TYPES_QUERY } from "../Phenomena.types";
+import { CREATE_PHENOMENON, TYPES_QUERY, Types } from "../Phenomena.types";
 import "./createphenomena.css";
 import { useHistory } from "react-router-dom";
 
@@ -20,18 +20,13 @@ const validationSchema = Yup.object().shape({
   researcherId: Yup.number().required("Required").positive("Positive"),
 });
 
-let typeOptions: any[] = [];
-
-function useGetTypes(): void {
-  const { data, loading, refetch } = useQuery(TYPES_QUERY);
-  if (!loading && data) {
-    typeOptions = data.getPhenomena;
-  }
-  refetch();
+function ToArray(type: any) {
+  return Object.keys(type).map((key) => type[key]);
 }
 
+let typeOptions: Types[] = ToArray(Types);
+
 export default function CreatePhenomena() {
-  useGetTypes();
   let history = useHistory();
   const [createPhenomenon] = useMutation(CREATE_PHENOMENON);
   const { handleBlur, handleChange, handleSubmit, values, errors } = useFormik({
@@ -94,8 +89,6 @@ export default function CreatePhenomena() {
           {errors.description ? errors.description : null}
         </span>
         <br />
-
-        {console.log(typeOptions)}
         <select
           name="type"
           value={values.type}
@@ -104,12 +97,7 @@ export default function CreatePhenomena() {
         >
           <option value="" label="Select a type" />
           {typeOptions.map((option) => {
-            return (
-              <option
-                value={`${option.type}`}
-                label={`${option.type}`}
-              ></option>
-            );
+            return <option value={`${option}`} label={`${option}`}></option>;
           })}
         </select>
         <span className="error">{errors.type ? errors.type : null}</span>
