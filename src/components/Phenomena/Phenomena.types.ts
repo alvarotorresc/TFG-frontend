@@ -68,7 +68,7 @@ export const OCURRENCE_QUERY = gql`
 `
 
 // eslint-disable-next-line
-enum Types {
+export enum Types {
   APPARITION = "APPARITION",
   PSYCHOPHONY = "PSYCHOPHONY",
   HAUNTED_HOUSE = "HAUNTED_HOUSE",

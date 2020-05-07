@@ -5,6 +5,7 @@ import { Grid, Header, Icon, Image } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
 import { RESEARCHER_QUERY } from "../utils/graphql/researcher.graphql";
 import "./detail.css";
+import phenomenon from "../../../models/phenomenon";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
@@ -89,7 +90,7 @@ export default function ResearcherDetail() {
                   color: "white",
                 }}
               >
-                {phenomena.map((phenomenon: any) => {
+                {phenomena.map((phenomenon: phenomenon) => {
                   return (
                     <Link to={`/phenomena/${phenomenon.id}`}>
                       <p style={{ color: "white", fontStyle: "bold" }}>
