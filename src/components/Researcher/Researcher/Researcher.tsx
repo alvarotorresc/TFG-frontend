@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { Card, Icon, CardProps, Button, Confirm } from "semantic-ui-react";
+import { Card, Icon, Button, Confirm } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./researcher.css";
+import { CardProps } from "../utils/props/researcher.props";
 
 let e = "e";
 
 function nameLink(name: string, id: number) {
   return (
     <div>
-      <Link
-        to={{ pathname: `/researchers/${id} ` }}
-        style={{ fontSize: "25px", color: "black" }}
-      >
+      <Link to={{ pathname: `/researchers/${id} ` }} id="linkName">
         {name}
       </Link>
     </div>
@@ -43,6 +41,7 @@ export default function Researcher({
       meta={`${rol} - ${phenomena.length} phenomena ☢️`}
       description={`This researcher is ${age} and is ${nationality} `}
       key={id}
+      id="cardId"
       extra={
         <div>
           <Icon name="mail" />
@@ -68,7 +67,6 @@ export default function Researcher({
         </div>
       }
       centered
-      style={{ marginTop: "0", marginBottom: "50px" }}
     />
   );
 }

@@ -21,5 +21,6 @@ export type CardProps = {
     rol: string;
     image: string;
     nationality: string;
+    handleDelete: (id: number) => void;
     phenomena: []
 };
