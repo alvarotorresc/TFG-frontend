@@ -3,9 +3,10 @@ import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_PHENOMENON, Types } from "../Phenomena.types";
+import { CREATE_PHENOMENON } from "../utils/graphql/phenomena.graphql";
 import "./createphenomena.css";
 import { useHistory } from "react-router-dom";
+import { Types } from "../utils/Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()

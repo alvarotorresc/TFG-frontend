@@ -1,4 +1,4 @@
-import { Types } from "../components/Phenomena/Phenomena.types";
+import { Types } from "../components/Phenomena/utils/Phenomena.types";
 import researcher from './researcher';
 
 export default interface phenomenon {

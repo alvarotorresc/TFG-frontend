@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PhenomenaProps } from "../Phenomena.types";
+import { PhenomenaProps } from "../utils/props/phenomena.props";
 import { Card, Image, Button, Confirm } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 

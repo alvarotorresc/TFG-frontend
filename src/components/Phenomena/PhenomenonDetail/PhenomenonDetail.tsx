@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   PHENOMENON_QUERY,
-  OcurrencesProps,
   DELETE_OCURRENCE,
-} from "../Phenomena.types";
+} from "../utils/graphql/phenomena.graphql";
 import Loading from "../../Layout/Loading/Loading";
 import { Header, Icon, Grid, Image, Divider } from "semantic-ui-react";
 import Ocurrence from "../Ocurrence/Ocurrence";
+import { OcurrencesProps } from "../utils/props/phenomena.props";
 
 export default function PhenomenonDetail() {
   let { id } = useParams();

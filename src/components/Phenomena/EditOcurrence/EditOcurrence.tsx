@@ -11,7 +11,10 @@ import {
 } from "semantic-ui-react";
 import * as Yup from "yup";
 import { useParams, useHistory } from "react-router-dom";
-import { UPDATE_OCURRENCE, OCURRENCE_QUERY } from "../Phenomena.types";
+import {
+  UPDATE_OCURRENCE,
+  OCURRENCE_QUERY,
+} from "../utils/graphql/phenomena.graphql";
 import { DateTimeInput } from "semantic-ui-calendar-react";
 
 const validationSchema = Yup.object().shape({

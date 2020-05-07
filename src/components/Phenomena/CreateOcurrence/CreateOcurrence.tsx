@@ -10,7 +10,7 @@ import {
   TextArea,
 } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_OCURRENCE } from "../Phenomena.types";
+import { CREATE_OCURRENCE } from "../utils/graphql/phenomena.graphql";
 import { DateTimeInput } from "semantic-ui-calendar-react";
 import "./createocurrence.css";
 

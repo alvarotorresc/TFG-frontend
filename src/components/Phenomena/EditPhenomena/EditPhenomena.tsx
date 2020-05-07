@@ -8,7 +8,7 @@ import {
   UPDATE_PHENOMENA,
   PHENOMENON_QUERY,
   TYPES_QUERY,
-} from "../Phenomena.types";
+} from "../utils/graphql/phenomena.graphql";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()

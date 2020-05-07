@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { OcurrencesProps } from "../Phenomena.types";
+import { OcurrencesProps } from "../utils/props/phenomena.props";
 import { Container, Card, Icon, Button, Confirm } from "semantic-ui-react";
 import "./Ocurrence.css";
 

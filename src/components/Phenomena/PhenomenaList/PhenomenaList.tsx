@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   PHENOMENA_QUERY,
-  PhenomenaProps,
   DELETE_PHENOMENON,
-} from "../Phenomena.types";
+} from "../utils/graphql/phenomena.graphql";
 import Loading from "../../Layout/Loading/Loading";
 import { Grid, Header, Icon } from "semantic-ui-react";
 import Phenomenon from "../Phenomenon/Phenomenon";
+import { PhenomenaProps } from "../utils/props/phenomena.props";
 
 export default function PhenomenaList() {
   const [phenomena, setPhenomena] = useState<any>(Object);

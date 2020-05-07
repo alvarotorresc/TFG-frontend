@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import researcher from '../../models/researcher';
 
 export const PHENOMENA_QUERY = gql`
 query getPhenomena {
@@ -66,17 +65,6 @@ export const OCURRENCE_QUERY = gql`
   }
 
 `
-
-// eslint-disable-next-line
-export enum Types {
-  APPARITION = "APPARITION",
-  PSYCHOPHONY = "PSYCHOPHONY",
-  HAUNTED_HOUSE = "HAUNTED_HOUSE",
-  REINCARNATION = "REINCARNATION",
-  TELEPATHY = "TELEPATHY",
-  TELEKINESIS = "TELEKINESIS",
-  UFOLOGY = "UFOLOGY",
-}
 
 export const CREATE_PHENOMENON = gql`
   mutation createPhenomenon(
@@ -188,22 +176,3 @@ export const DELETE_OCURRENCE = gql`
     )
   }
 `
-
-export type PhenomenaProps = {
-  id: string
-  title: string
-  description: string
-  type: string
-  researcher: researcher
-  handleDelete: (id: any) => void
-}
-
-export type OcurrencesProps = {
-  id: string,
-  date: Date,
-  ubication: JSON,
-  description: string,
-  witness: boolean,
-  resolved: boolean
-  handleDelete: (id: any) => void
-}
