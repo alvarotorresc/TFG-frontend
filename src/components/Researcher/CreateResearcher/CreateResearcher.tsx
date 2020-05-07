@@ -31,7 +31,9 @@ const validationSchema = Yup.object().shape({
 
 export default function CreateResearcher() {
   const [addResearcher] = useMutation(ADD_RESEARCHER);
+
   let history = useHistory();
+
   const {
     handleBlur,
     handleChange,

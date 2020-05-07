@@ -32,10 +32,12 @@ export default function EditResearcher() {
   let { id } = useParams();
   id = String(id);
   let idR = parseInt(id);
+
   let history = useHistory();
 
   const [updateResearcher] = useMutation(UPDATE_RESEARCHER);
   const [researcher, setresearcher] = useState(Object);
+
   const { data, loading, refetch } = useQuery(RESEARCHER_QUERY, {
     variables: { idR },
   });
