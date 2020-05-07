@@ -195,7 +195,7 @@ export type PhenomenaProps = {
   description: string
   type: string
   researcher: researcher
-  handleDelete: any
+  handleDelete: (id: any) => void
 }
 
 export type OcurrencesProps = {
@@ -205,5 +205,5 @@ export type OcurrencesProps = {
   description: string,
   witness: boolean,
   resolved: boolean
-  handleDelete: any
+  handleDelete: (id: any) => void
 }

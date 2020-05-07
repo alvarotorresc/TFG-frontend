@@ -1,9 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_PHENOMENON, TYPES_QUERY, Types } from "../Phenomena.types";
+import { CREATE_PHENOMENON, Types } from "../Phenomena.types";
 import "./createphenomena.css";
 import { useHistory } from "react-router-dom";
 
