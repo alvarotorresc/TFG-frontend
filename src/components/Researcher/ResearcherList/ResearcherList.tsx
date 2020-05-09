@@ -32,7 +32,7 @@ export default function ResearcherList() {
 
   if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
-  if (researchers["getResearchers"])
+  if (researchers["researchers"])
     return (
       <div>
         <Header as="h1" icon textAlign="center" style={{ paddingTop: "30px" }}>
@@ -41,7 +41,7 @@ export default function ResearcherList() {
         </Header>
         <Grid style={{ padding: "6%" }} stackable>
           <Grid.Row>
-            {researchers.getResearchers.map(
+            {researchers.researchers.map(
               ({
                 id,
                 firstName,

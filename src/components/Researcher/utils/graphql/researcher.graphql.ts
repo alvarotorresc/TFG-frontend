@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const RESEARCHERS_QUERY = gql`
-  query getResearchers {
-    getResearchers {
+  query researchers {
+    researchers {
       id
       firstName
       lastName
@@ -20,8 +20,8 @@ export const RESEARCHERS_QUERY = gql`
 `;
 
 export const RESEARCHER_QUERY = gql`
-  query getResearcher($idR: Int!) {
-    getResearcher(id: $idR) {
+  query researcher($id: String!) {
+    researcher(id: $id) {
       id
       firstName
       lastName
@@ -51,7 +51,7 @@ export const ADD_RESEARCHER = gql`
     $image: String!
   ) {
     createResearcher(
-      data: {
+      dto: {
         firstName: $firstName
         lastName: $lastName
         email: $email
@@ -69,7 +69,7 @@ export const ADD_RESEARCHER = gql`
 
 export const UPDATE_RESEARCHER = gql`
   mutation updateResearcher(
-      $id: Int!
+      $id: String!
       $firstName: String!
       $lastName: String!
       $email: String!
@@ -79,9 +79,9 @@ export const UPDATE_RESEARCHER = gql`
       $rol: Rol!
       $image: String!) {
       updateResearcher(
-        id: $id,
-        researcher: {
-          firstName: $firstName
+        dto: {
+          researcherId: $id
+        firstName: $firstName
         lastName: $lastName
         email: $email
         password: $password

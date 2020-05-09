@@ -9,25 +9,27 @@ import phenomenon from "../../../models/phenomenon";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
-  id = String(id);
-  let idR = parseInt(id);
 
-  const [researcher, setresearcher] = useState(Object);
+  const [researcher, setresearcher] = useState<any>(Object);
   const { data, loading, error, refetch } = useQuery(RESEARCHER_QUERY, {
-    variables: { idR },
+    variables: { id },
   });
 
+  console.log(loading, error, data, researcher);
+
   useEffect(() => {
+    console.log(data);
     if (!loading && data) {
       setresearcher(data);
     }
     refetch();
-  }, [id, data, loading, refetch]);
+  }, [data, loading, refetch, researcher, id]);
 
   if (loading) return <Loading />;
-  if (error) return <p>Error :</p>;
+  if (error) return <p>Erro :</p>;
 
-  if (researcher["getResearcher"]) {
+  if (researcher["researcher"]) {
+    console.log(researcher, data);
     const {
       firstName,
       lastName,
@@ -37,7 +39,7 @@ export default function ResearcherDetail() {
       nationality,
       image,
       phenomena,
-    } = researcher.getResearcher;
+    } = researcher.researcher;
     return (
       <div>
         <Header as="p" icon textAlign="center" style={{ paddingTop: "30px" }}>
