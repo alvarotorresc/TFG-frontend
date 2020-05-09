@@ -1,9 +1,12 @@
 import React from "react";
+import { Grid } from "semantic-ui-react";
 
 export default function PostList() {
   return (
     <div>
-      <h1>Post list</h1>
+      <Grid centered style={{ padding: "21%" }}>
+        <h1 style={{ fontSize: "70px" }}>Oops! Posts available soon</h1>
+      </Grid>
     </div>
   );
 }

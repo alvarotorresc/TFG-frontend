@@ -2,3 +2,13 @@
   color: #000;
   width: 1000px;
 }
+
+#linkName {
+  font-size: 25px;
+  color: #000;
+}
+
+#cardId {
+  margin-top: 0px;
+  margin-bottom: 50px;
+}

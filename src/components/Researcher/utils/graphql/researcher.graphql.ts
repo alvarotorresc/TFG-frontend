@@ -1,33 +1,8 @@
-import researcher from "../../models/researcher";
 import { gql } from "@apollo/client";
 
-export type ResearcherProps = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  rol: string;
-  nationality: string;
-  image: string;
-  researcher: researcher;
-  phenomena: []
-};
-
-export type CardProps = {
-  id: number;
-  name: string;
-  email: string;
-  age: number;
-  rol: string;
-  image: string;
-  nationality: string;
-  phenomena: []
-};
-
 export const RESEARCHERS_QUERY = gql`
-  query getResearchers {
-    getResearchers {
+  query researchers {
+    researchers {
       id
       firstName
       lastName
@@ -45,8 +20,8 @@ export const RESEARCHERS_QUERY = gql`
 `;
 
 export const RESEARCHER_QUERY = gql`
-  query getResearcher($idR: Int!) {
-    getResearcher(id: $idR) {
+  query researcher($id: String!) {
+    researcher(id: $id) {
       id
       firstName
       lastName
@@ -63,20 +38,6 @@ export const RESEARCHER_QUERY = gql`
     }
   }
 `;
-// eslint-disable-next-line
-enum Rol {
-  ADMIN = "ADMIN",
-  RESEARCHER = "RESEARCHER",
-}
-
-export const urlImages = [
-  "https://semantic-ui.com/images/avatar/large/steve.jpg",
-  "https://semantic-ui.com/images/avatar/large/helen.jpg",
-  "https://semantic-ui.com/images/avatar/large/elliot.jpg",
-  "https://semantic-ui.com/images/avatar2/large/kristy.png",
-  "https://semantic-ui.com/images/avatar2/large/matthew.png",
-  "https://semantic-ui.com/images/avatar/large/veronika.jpg",
-];
 
 export const ADD_RESEARCHER = gql`
   mutation addResearcher(
@@ -90,7 +51,7 @@ export const ADD_RESEARCHER = gql`
     $image: String!
   ) {
     createResearcher(
-      data: {
+      dto: {
         firstName: $firstName
         lastName: $lastName
         email: $email
@@ -108,7 +69,7 @@ export const ADD_RESEARCHER = gql`
 
 export const UPDATE_RESEARCHER = gql`
   mutation updateResearcher(
-      $id: Int!
+      $id: String!
       $firstName: String!
       $lastName: String!
       $email: String!
@@ -118,9 +79,9 @@ export const UPDATE_RESEARCHER = gql`
       $rol: Rol!
       $image: String!) {
       updateResearcher(
-        id: $id,
-        researcher: {
-          firstName: $firstName
+        dto: {
+        researcherId: $id
+        firstName: $firstName
         lastName: $lastName
         email: $email
         password: $password
@@ -137,10 +98,12 @@ export const UPDATE_RESEARCHER = gql`
 
 export const DELETE_RESEARCHER = gql`
   mutation deleteResearcher(
-    $id: Int!
+    $id: String!
   ){
     deleteResearcher(
-      id: $id
+      dto: {
+        researcherId: $id
+      }
     )
   }
 `

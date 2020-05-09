@@ -3,9 +3,11 @@ import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { ADD_RESEARCHER, urlImages } from "../Researcher.types";
+import { urlImages } from "../utils/researcher.utils";
 import "./createresearcher.css";
 import { useHistory } from "react-router-dom";
+import { ADD_RESEARCHER } from "../utils/graphql/researcher.graphql";
+import { onError } from "@apollo/link-error";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -29,8 +31,20 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function CreateResearcher() {
-  const [addResearcher] = useMutation(ADD_RESEARCHER);
+  const [addResearcher, { error: mutationError }] = useMutation(ADD_RESEARCHER);
+
   let history = useHistory();
+
+  onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
+
   const {
     handleBlur,
     handleChange,
@@ -46,7 +60,7 @@ export default function CreateResearcher() {
       password: "",
       nationality: "",
       age: "",
-      rol: "RESEARCHER",
+      rol: "Researcher",
       image: "https://semantic-ui.com/images/avatar/large/steve.jpg",
     },
     validationSchema,
@@ -147,10 +161,10 @@ export default function CreateResearcher() {
           id="admin"
           name="rol"
           style={{ fontSize: "25px", marginTop: "10px " }}
-          onChange={() => setFieldValue("rol", "ADMIN")}
+          onChange={() => setFieldValue("rol", "Admin")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "ADMIN"}
+          checked={values.rol === "Admin"}
         ></Form.Radio>
         <Form.Radio
           type="radio"
@@ -158,10 +172,10 @@ export default function CreateResearcher() {
           name="rol"
           label="Researcher"
           style={{ fontSize: "25px" }}
-          onChange={() => setFieldValue("rol", "RESEARCHER")}
+          onChange={() => setFieldValue("rol", "Researcher")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "RESEARCHER"}
+          checked={values.rol === "Researcher"}
         ></Form.Radio>
         <br></br>
         <label htmlFor="Rol">

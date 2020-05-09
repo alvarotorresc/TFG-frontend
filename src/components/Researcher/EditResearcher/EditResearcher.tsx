@@ -4,12 +4,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
+import { urlImages } from "../utils/researcher.utils";
+import { useHistory } from "react-router-dom";
 import {
-  urlImages,
   UPDATE_RESEARCHER,
   RESEARCHER_QUERY,
-} from "../Researcher.types";
-import { useHistory } from "react-router-dom";
+} from "../utils/graphql/researcher.graphql";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -31,17 +31,20 @@ const validationSchema = Yup.object().shape({
 export default function EditResearcher() {
   let { id } = useParams();
   id = String(id);
-  let idR = parseInt(id);
+  id = id.trim();
+
   let history = useHistory();
 
   const [updateResearcher] = useMutation(UPDATE_RESEARCHER);
   const [researcher, setresearcher] = useState(Object);
+
   const { data, loading, refetch } = useQuery(RESEARCHER_QUERY, {
-    variables: { idR },
+    variables: { id },
   });
 
   useEffect(() => {
     if (!loading && data) {
+      console.log(data);
       setresearcher(data);
     }
     refetch();
@@ -49,8 +52,8 @@ export default function EditResearcher() {
 
   let initialValues;
 
-  if (researcher["getResearcher"]) {
-    initialValues = Object.assign(researcher.getResearcher);
+  if (researcher["researcher"]) {
+    initialValues = Object.assign(researcher.researcher);
   }
 
   const {
@@ -77,7 +80,7 @@ export default function EditResearcher() {
   });
   return (
     <Grid centered textAlign="center" id="grid">
-      <h1>Create a new Researcher</h1>
+      <h1>Edit a Researcher</h1>
       <Form onSubmit={handleSubmit} size={"huge"}>
         <Input
           type="text"
@@ -148,10 +151,10 @@ export default function EditResearcher() {
           id="admin"
           name="rol"
           style={{ fontSize: "25px", marginTop: "10px " }}
-          onChange={() => setFieldValue("rol", "ADMIN")}
+          onChange={() => setFieldValue("rol", "Admin")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "ADMIN"}
+          checked={values.rol === "Admin"}
         ></Form.Radio>
         <Form.Radio
           type="radio"
@@ -159,10 +162,10 @@ export default function EditResearcher() {
           name="rol"
           label="Researcher"
           style={{ fontSize: "25px" }}
-          onChange={() => setFieldValue("rol", "RESEARCHER")}
+          onChange={() => setFieldValue("rol", "Researcher")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "RESEARCHER"}
+          checked={values.rol === "Researcher"}
         ></Form.Radio>
         <br></br>
         <label htmlFor="Rol">

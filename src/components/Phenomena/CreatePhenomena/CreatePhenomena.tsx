@@ -1,11 +1,12 @@
 import React from "react";
 import { useFormik } from "formik";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_PHENOMENON, TYPES_QUERY } from "../Phenomena.types";
+import { CREATE_PHENOMENON } from "../utils/graphql/phenomena.graphql";
 import "./createphenomena.css";
 import { useHistory } from "react-router-dom";
+import { Types } from "../utils/Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -17,21 +18,15 @@ const validationSchema = Yup.object().shape({
     .max(200, "Too Long!")
     .required("Required"),
   type: Yup.string().required("Required"),
-  researcherId: Yup.number().required("Required").positive("Positive"),
 });
 
-let typeOptions: any[] = [];
-
-function useGetTypes(): void {
-  const { data, loading, refetch } = useQuery(TYPES_QUERY);
-  if (!loading && data) {
-    typeOptions = data.getPhenomena;
-  }
-  refetch();
+function ToArray(type: any) {
+  return Object.keys(type).map((key) => type[key]);
 }
 
+let typeOptions: Types[] = ToArray(Types);
+
 export default function CreatePhenomena() {
-  useGetTypes();
   let history = useHistory();
   const [createPhenomenon] = useMutation(CREATE_PHENOMENON);
   const { handleBlur, handleChange, handleSubmit, values, errors } = useFormik({
@@ -59,7 +54,7 @@ export default function CreatePhenomena() {
       <h1>Create a new Phenomenon</h1>
       <Form onSubmit={handleSubmit} size={"huge"}>
         <Input
-          type="number"
+          type="text"
           placeholder={"ID"}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -94,8 +89,6 @@ export default function CreatePhenomena() {
           {errors.description ? errors.description : null}
         </span>
         <br />
-
-        {console.log(typeOptions)}
         <select
           name="type"
           value={values.type}
@@ -104,12 +97,7 @@ export default function CreatePhenomena() {
         >
           <option value="" label="Select a type" />
           {typeOptions.map((option) => {
-            return (
-              <option
-                value={`${option.type}`}
-                label={`${option.type}`}
-              ></option>
-            );
+            return <option value={`${option}`} label={`${option}`}></option>;
           })}
         </select>
         <span className="error">{errors.type ? errors.type : null}</span>

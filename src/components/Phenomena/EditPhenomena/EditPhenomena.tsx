@@ -7,8 +7,8 @@ import { useParams, useHistory } from "react-router-dom";
 import {
   UPDATE_PHENOMENA,
   PHENOMENON_QUERY,
-  TYPES_QUERY,
-} from "../Phenomena.types";
+} from "../utils/graphql/phenomena.graphql";
+import { Types } from "../utils/Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -20,32 +20,24 @@ const validationSchema = Yup.object().shape({
     .max(200, "Too Long!")
     .required("Required"),
   type: Yup.string().required("Required"),
-  researcherId: Yup.number().required("Required").positive("Positive"),
 });
 
-let typeOptions: any[] = [];
-
-function useGetTypes(): void {
-  const { data, loading, refetch } = useQuery(TYPES_QUERY);
-  if (!loading && data) {
-    typeOptions = data.getPhenomena;
-  }
-  refetch();
+function ToArray(type: any) {
+  return Object.keys(type).map((key) => type[key]);
 }
 
+let typeOptions: Types[] = ToArray(Types);
+
 export default function EditPhenomena() {
-  useGetTypes();
   let history = useHistory();
 
   let { id } = useParams();
-  id = String(id);
-  let idR = parseInt(id);
 
   const [updatePhenomenon] = useMutation(UPDATE_PHENOMENA);
 
   const [phenomenon, setPhenomenon] = useState(Object);
   const { data, loading, refetch } = useQuery(PHENOMENON_QUERY, {
-    variables: { idR },
+    variables: { id },
   });
 
   useEffect(() => {
@@ -55,14 +47,13 @@ export default function EditPhenomena() {
     refetch();
   }, [id, data, loading, refetch]);
 
-  let description, title, type, researcherId, researcherFirst, researcherLast;
+  let description, title, type, researcherFirst, researcherLast;
 
   if (phenomenon["getPhenomenon"]) {
     description = phenomenon.getPhenomenon.description;
     title = phenomenon.getPhenomenon.title;
     type = phenomenon.getPhenomenon.type;
     id = phenomenon.getPhenomenon.id;
-    researcherId = phenomenon.getPhenomenon.researcher.id;
     researcherFirst = phenomenon.getPhenomenon.researcher.firstName;
     researcherLast = phenomenon.getPhenomenon.researcher.lastName;
   }
@@ -73,7 +64,6 @@ export default function EditPhenomena() {
       description: description,
       title: title,
       type: type,
-      researcherId: researcherId,
       id: id,
     },
     validationSchema,
@@ -99,9 +89,6 @@ export default function EditPhenomena() {
           name="researcherName"
           className="input"
         />
-        <span className="error">
-          {errors.researcherId ? errors.researcherId : null}
-        </span>
         <br />
         <Input
           type="text"
@@ -134,12 +121,7 @@ export default function EditPhenomena() {
         >
           <option value="" label="Select a type" />
           {typeOptions.map((option) => {
-            return (
-              <option
-                value={`${option.type}`}
-                label={`${option.type}`}
-              ></option>
-            );
+            return <option value={`${option}`} label={`${option}`}></option>;
           })}
         </select>
         <span className="error">{errors.type ? errors.type : null}</span>

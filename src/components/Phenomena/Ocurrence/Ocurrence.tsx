@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { OcurrencesProps } from "../Phenomena.types";
+import { OcurrencesProps } from "../utils/props/phenomena.props";
 import { Container, Card, Icon, Button, Confirm } from "semantic-ui-react";
 import "./Ocurrence.css";
 
@@ -11,12 +11,6 @@ function seeCorrectDate(date: Date) {
   let time = stringDate.substring(11, 16);
   stringDate = `${day} /  ${time}h`;
   return stringDate;
-}
-
-function seeCorrectJson(jsonD: any) {
-  if (jsonD) {
-    return `${jsonD.lat}º - ${jsonD.lng}º   `;
-  }
 }
 
 function seeCorrectBoolean(bool: boolean) {

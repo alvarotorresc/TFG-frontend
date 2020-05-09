@@ -3,30 +3,32 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Grid, Header, Icon, Image } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
-import { RESEARCHER_QUERY } from "../Researcher.types";
+import { RESEARCHER_QUERY } from "../utils/graphql/researcher.graphql";
 import "./detail.css";
+import phenomenon from "../../../models/phenomenon";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
-  id = String(id);
-  let idR = parseInt(id);
 
-  const [researcher, setresearcher] = useState(Object);
-  const { data, loading, error, refetch } = useQuery(RESEARCHER_QUERY, {
-    variables: { idR },
+  id = id?.trim();
+
+  const [researcher, setresearcher] = useState<any>(Object);
+  const { data, loading, error } = useQuery(RESEARCHER_QUERY, {
+    variables: { id },
   });
+
+  console.log(loading, error, data, researcher, id);
 
   useEffect(() => {
     if (!loading && data) {
       setresearcher(data);
     }
-    refetch();
-  }, [id, data, loading, refetch]);
+  }, [data, loading, researcher, id]);
 
   if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
 
-  if (researcher["getResearcher"]) {
+  if (researcher["researcher"]) {
     const {
       firstName,
       lastName,
@@ -36,7 +38,7 @@ export default function ResearcherDetail() {
       nationality,
       image,
       phenomena,
-    } = researcher.getResearcher;
+    } = researcher.researcher;
     return (
       <div>
         <Header as="p" icon textAlign="center" style={{ paddingTop: "30px" }}>
@@ -89,7 +91,7 @@ export default function ResearcherDetail() {
                   color: "white",
                 }}
               >
-                {phenomena.map((phenomenon: any) => {
+                {phenomena.map((phenomenon: phenomenon) => {
                   return (
                     <Link to={`/phenomena/${phenomenon.id}`}>
                       <p style={{ color: "white", fontStyle: "bold" }}>

@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import researcher from '../../models/researcher';
 
 export const PHENOMENA_QUERY = gql`
 query getPhenomena {
@@ -18,17 +17,10 @@ query getPhenomena {
 }
 `
 
-export const TYPES_QUERY = gql`
-query getPhenomenaTypes {
-    getPhenomena {
-    type
-}
-}
-`
 
 export const PHENOMENON_QUERY = gql`
-  query getPhenomenon($idR: Int!) {
-    getPhenomenon(id: $idR) {
+  query getPhenomenon($id: String!) {
+    getPhenomenon(id: $id) {
       id
       title
       description
@@ -41,7 +33,6 @@ export const PHENOMENON_QUERY = gql`
       ocurrences {
         id
         date
-        ubication
         description
         witness
         resolved
@@ -50,11 +41,10 @@ export const PHENOMENON_QUERY = gql`
   }
 `;
 export const OCURRENCE_QUERY = gql`
-  query getOcurrence($idO: Int!) {
-    getOcurrence(id: $idO) {
+  query getOcurrence($id: String!) {
+    getOcurrence(id: $id) {
       id
       date
-      ubication
       description
       witness
       resolved
@@ -67,26 +57,15 @@ export const OCURRENCE_QUERY = gql`
 
 `
 
-// eslint-disable-next-line
-enum Types {
-  APPARITION = "APPARITION",
-  PSYCHOPHONY = "PSYCHOPHONY",
-  HAUNTED_HOUSE = "HAUNTED_HOUSE",
-  REINCARNATION = "REINCARNATION",
-  TELEPATHY = "TELEPATHY",
-  TELEKINESIS = "TELEKINESIS",
-  UFOLOGY = "UFOLOGY",
-}
-
 export const CREATE_PHENOMENON = gql`
   mutation createPhenomenon(
-    $researcherId: Int!
+    $researcherId: String!
     $title: String!
     $description: String!
     $type: Types!
   ) {
     createPhenomenon(
-      data: {
+      dto: {
         researcherId: $researcherId
         title: $title
         type: $type
@@ -100,18 +79,16 @@ export const CREATE_PHENOMENON = gql`
 
 export const CREATE_OCURRENCE = gql`
   mutation createOcurrence(
-    $phenomenaId: Int!
-    $date: DateTime!
+    $phenomenaId: String!
+    $date: Date!
     $description: String!
-    $ubication: JSON!
     $witness: Boolean!
     $resolved: Boolean!
   ) {
     createOcurrence(
-      data: {
+      dto: {
         phenomenaId: $phenomenaId
         date: $date
-        ubication: $ubication
         description: $description
         witness: $witness
         resolved: $resolved
@@ -124,15 +101,13 @@ export const CREATE_OCURRENCE = gql`
 
 export const UPDATE_PHENOMENA = gql`
   mutation updatePhenomenon(
-    $researcherId: Int!
-    $id: Int!
+    $id: String!
     $title: String!
     $description: String!
     $type: Types!) {
       updatePhenomenon(
-        id: $id,
-      phenomenon: {
-        researcherId: $researcherId
+        dto: {
+        phenomenonId: $id
         title: $title
         type: $type
         description: $description
@@ -145,20 +120,16 @@ export const UPDATE_PHENOMENA = gql`
 
 export const UPDATE_OCURRENCE = gql`
   mutation updateOcurrence(
-    $id: Int!
-    $phenomenaId: Int!
-    $date: DateTime!
+    $id: String!
+    $date: Date!
     $description: String!
-    $ubication: JSON!
     $witness: Boolean!
     $resolved: Boolean!
   ) {
     updateOcurrence (
-      id: $id,
-      ocurrence: {
-        phenomenaId: $phenomenaId
+      dto: {
+        ocurrenceId: $id
         date: $date
-        ubication: $ubication
         description: $description
         witness: $witness
         resolved: $resolved
@@ -171,39 +142,25 @@ export const UPDATE_OCURRENCE = gql`
 
 export const DELETE_PHENOMENON = gql`
   mutation deletePhenomenon(
-    $id: Int!
+    $id: String!
   ){
     deletePhenomenon(
-      id: $id
+      dto: {
+        phenomenonId: $id
+      }
     )
   }
 `
 
 export const DELETE_OCURRENCE = gql`
   mutation deleteOcurrence(
-    $id: Int!
+    $id: String!
   ){
     deleteOcurrence(
-      id: $id
+      dto:{
+        ocurrenceId: $id
+      }
+      
     )
   }
 `
-
-export type PhenomenaProps = {
-  id: string
-  title: string
-  description: string
-  type: string
-  researcher: researcher
-  handleDelete: any
-}
-
-export type OcurrencesProps = {
-  id: string,
-  date: Date,
-  ubication: JSON,
-  description: string,
-  witness: boolean,
-  resolved: boolean
-  handleDelete: any
-}
