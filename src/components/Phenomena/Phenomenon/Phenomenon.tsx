@@ -11,7 +11,7 @@ function capitalize(string: string) {
   });
 }
 
-function nameLink(name: string, id: number) {
+function nameLink(name: string, id: String) {
   return (
     <div>
       <Link
@@ -35,6 +35,7 @@ export default function Phenomenon({
   const [isOpen, setOpen] = useState<boolean>(false);
 
   function deleteResearcher() {
+    console.log(id);
     handleDelete(id);
     setOpen(false);
   }
@@ -55,7 +56,7 @@ export default function Phenomenon({
           href={`http://localhost:3000/researchers/${researcher.id}`}
           target="_blank"
         />
-        <Card.Header>{nameLink(title, parseInt(id))}</Card.Header>
+        <Card.Header>{nameLink(title, id)}</Card.Header>
         <Card.Meta style={{ marginTop: "10px", fontSize: "20px" }}>
           {`${capitalize(type)} - ${researcher.firstName} ${
             researcher.lastName

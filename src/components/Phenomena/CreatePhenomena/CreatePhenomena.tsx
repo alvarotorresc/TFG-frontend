@@ -18,7 +18,6 @@ const validationSchema = Yup.object().shape({
     .max(200, "Too Long!")
     .required("Required"),
   type: Yup.string().required("Required"),
-  researcherId: Yup.number().required("Required").positive("Positive"),
 });
 
 function ToArray(type: any) {
@@ -55,7 +54,7 @@ export default function CreatePhenomena() {
       <h1>Create a new Phenomenon</h1>
       <Form onSubmit={handleSubmit} size={"huge"}>
         <Input
-          type="number"
+          type="text"
           placeholder={"ID"}
           onChange={handleChange}
           onBlur={handleBlur}

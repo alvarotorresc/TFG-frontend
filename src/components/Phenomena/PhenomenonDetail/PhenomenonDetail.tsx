@@ -12,15 +12,14 @@ import { OcurrencesProps } from "../utils/props/phenomena.props";
 
 export default function PhenomenonDetail() {
   let { id } = useParams();
-  id = String(id);
-  let idR = parseInt(id);
+
   const [phenomenon, setPhenomenon] = useState(Object);
   const [deleteOcurrence] = useMutation(DELETE_OCURRENCE);
   const { data, loading, error, refetch } = useQuery(PHENOMENON_QUERY, {
-    variables: { idR },
+    variables: { id },
   });
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: String) {
     await deleteOcurrence({
       variables: {
         id,
@@ -48,7 +47,6 @@ export default function PhenomenonDetail() {
     } = phenomenon.getPhenomenon;
 
     const isOcurrences = phenomenon.getPhenomenon.ocurrences.length;
-    console.log(isOcurrences);
 
     return (
       <div>
@@ -114,5 +112,5 @@ export default function PhenomenonDetail() {
       </div>
     );
   }
-  return <div></div>;
+  return <p>p</p>;
 }

@@ -80,7 +80,7 @@ export const UPDATE_RESEARCHER = gql`
       $image: String!) {
       updateResearcher(
         dto: {
-          researcherId: $id
+        researcherId: $id
         firstName: $firstName
         lastName: $lastName
         email: $email
@@ -98,10 +98,12 @@ export const UPDATE_RESEARCHER = gql`
 
 export const DELETE_RESEARCHER = gql`
   mutation deleteResearcher(
-    $id: Int!
+    $id: String!
   ){
     deleteResearcher(
-      id: $id
+      dto: {
+        researcherId: $id
+      }
     )
   }
 `

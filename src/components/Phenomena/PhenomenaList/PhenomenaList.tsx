@@ -14,7 +14,8 @@ export default function PhenomenaList() {
   const { data, loading, error, refetch } = useQuery(PHENOMENA_QUERY);
   const [deletePhenomenon] = useMutation(DELETE_PHENOMENON);
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: String) {
+    console.log(id);
     await deletePhenomenon({
       variables: {
         id,

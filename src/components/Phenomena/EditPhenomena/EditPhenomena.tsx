@@ -20,7 +20,6 @@ const validationSchema = Yup.object().shape({
     .max(200, "Too Long!")
     .required("Required"),
   type: Yup.string().required("Required"),
-  researcherId: Yup.number().required("Required").positive("Positive"),
 });
 
 let typeOptions: any[] = [];
@@ -38,14 +37,12 @@ export default function EditPhenomena() {
   let history = useHistory();
 
   let { id } = useParams();
-  id = String(id);
-  let idR = parseInt(id);
 
   const [updatePhenomenon] = useMutation(UPDATE_PHENOMENA);
 
   const [phenomenon, setPhenomenon] = useState(Object);
   const { data, loading, refetch } = useQuery(PHENOMENON_QUERY, {
-    variables: { idR },
+    variables: { id },
   });
 
   useEffect(() => {
@@ -55,14 +52,13 @@ export default function EditPhenomena() {
     refetch();
   }, [id, data, loading, refetch]);
 
-  let description, title, type, researcherId, researcherFirst, researcherLast;
+  let description, title, type, researcherFirst, researcherLast;
 
   if (phenomenon["getPhenomenon"]) {
     description = phenomenon.getPhenomenon.description;
     title = phenomenon.getPhenomenon.title;
     type = phenomenon.getPhenomenon.type;
     id = phenomenon.getPhenomenon.id;
-    researcherId = phenomenon.getPhenomenon.researcher.id;
     researcherFirst = phenomenon.getPhenomenon.researcher.firstName;
     researcherLast = phenomenon.getPhenomenon.researcher.lastName;
   }
@@ -73,7 +69,6 @@ export default function EditPhenomena() {
       description: description,
       title: title,
       type: type,
-      researcherId: researcherId,
       id: id,
     },
     validationSchema,
@@ -99,9 +94,6 @@ export default function EditPhenomena() {
           name="researcherName"
           className="input"
         />
-        <span className="error">
-          {errors.researcherId ? errors.researcherId : null}
-        </span>
         <br />
         <Input
           type="text"

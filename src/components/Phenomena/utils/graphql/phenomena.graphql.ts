@@ -26,8 +26,8 @@ query getPhenomenaTypes {
 `
 
 export const PHENOMENON_QUERY = gql`
-  query getPhenomenon($idR: Int!) {
-    getPhenomenon(id: $idR) {
+  query getPhenomenon($id: String!) {
+    getPhenomenon(id: $id) {
       id
       title
       description
@@ -40,7 +40,6 @@ export const PHENOMENON_QUERY = gql`
       ocurrences {
         id
         date
-        ubication
         description
         witness
         resolved
@@ -49,7 +48,7 @@ export const PHENOMENON_QUERY = gql`
   }
 `;
 export const OCURRENCE_QUERY = gql`
-  query getOcurrence($idO: Int!) {
+  query getOcurrence($idO: String!) {
     getOcurrence(id: $idO) {
       id
       date
@@ -68,13 +67,13 @@ export const OCURRENCE_QUERY = gql`
 
 export const CREATE_PHENOMENON = gql`
   mutation createPhenomenon(
-    $researcherId: Int!
+    $researcherId: String!
     $title: String!
     $description: String!
     $type: Types!
   ) {
     createPhenomenon(
-      data: {
+      dto: {
         researcherId: $researcherId
         title: $title
         type: $type
@@ -88,7 +87,7 @@ export const CREATE_PHENOMENON = gql`
 
 export const CREATE_OCURRENCE = gql`
   mutation createOcurrence(
-    $phenomenaId: Int!
+    $phenomenaId: String!
     $date: DateTime!
     $description: String!
     $ubication: JSON!
@@ -112,15 +111,13 @@ export const CREATE_OCURRENCE = gql`
 
 export const UPDATE_PHENOMENA = gql`
   mutation updatePhenomenon(
-    $researcherId: Int!
-    $id: Int!
+    $id: String!
     $title: String!
     $description: String!
     $type: Types!) {
       updatePhenomenon(
-        id: $id,
-      phenomenon: {
-        researcherId: $researcherId
+        dto: {
+        phenomenonId: $id
         title: $title
         type: $type
         description: $description
@@ -133,7 +130,7 @@ export const UPDATE_PHENOMENA = gql`
 
 export const UPDATE_OCURRENCE = gql`
   mutation updateOcurrence(
-    $id: Int!
+    $id: String!
     $phenomenaId: Int!
     $date: DateTime!
     $description: String!
@@ -159,20 +156,25 @@ export const UPDATE_OCURRENCE = gql`
 
 export const DELETE_PHENOMENON = gql`
   mutation deletePhenomenon(
-    $id: Int!
+    $id: String!
   ){
     deletePhenomenon(
-      id: $id
+      dto: {
+        phenomenonId: $id
+      }
     )
   }
 `
 
 export const DELETE_OCURRENCE = gql`
   mutation deleteOcurrence(
-    $id: Int!
+    $id: String!
   ){
     deleteOcurrence(
-      id: $id
+      dto:{
+        ocurrenceId: $id
+      }
+      
     )
   }
 `
