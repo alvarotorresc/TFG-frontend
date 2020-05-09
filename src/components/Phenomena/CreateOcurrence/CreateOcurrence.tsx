@@ -13,17 +13,19 @@ import * as Yup from "yup";
 import { CREATE_OCURRENCE } from "../utils/graphql/phenomena.graphql";
 import { DateTimeInput } from "semantic-ui-calendar-react";
 import "./createocurrence.css";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   description: Yup.string()
     .min(10, "Too Short!")
     .max(200, "Too Long!")
     .required("Required"),
-  phenomenaId: Yup.number().required("Required").positive("Positive"),
   date: Yup.date().required(),
 });
 
 export default function CreateOcurrence() {
+  let history = useHistory();
+
   const [createPhenomenon] = useMutation(CREATE_OCURRENCE);
   const {
     handleBlur,
@@ -38,7 +40,6 @@ export default function CreateOcurrence() {
       phenomenaId: "",
       witness: false,
       resolved: false,
-      ubication: { lat: 45, lng: 20 },
       date: "",
     },
     validationSchema,
@@ -50,6 +51,7 @@ export default function CreateOcurrence() {
         },
       });
       resetForm();
+      history.push(`/phenomena/${values.phenomenaId}`);
     },
   });
   return (
@@ -57,7 +59,7 @@ export default function CreateOcurrence() {
       <Form onSubmit={handleSubmit} size={"huge"}>
         <h1>Create a new Ocurrence</h1>
         <Input
-          type="number"
+          type="text"
           placeholder={"ID"}
           onChange={handleChange}
           onBlur={handleBlur}

@@ -13,6 +13,8 @@ import { OcurrencesProps } from "../utils/props/phenomena.props";
 export default function PhenomenonDetail() {
   let { id } = useParams();
 
+  id = id?.trim();
+
   const [phenomenon, setPhenomenon] = useState(Object);
   const [deleteOcurrence] = useMutation(DELETE_OCURRENCE);
   const { data, loading, error, refetch } = useQuery(PHENOMENON_QUERY, {

@@ -62,6 +62,19 @@ export default function Researcher({
                 onCancel={() => setOpen(!isOpen)}
                 onConfirm={deleteResearcher}
               />
+              <Button
+                basic
+                color="blue"
+                style={{ marginTop: "10px" }}
+                className="delete"
+              >
+                <Link
+                  to={{ pathname: `/researcher/edit/${id} ` }}
+                  style={{ color: "blue" }}
+                >
+                  Edit
+                </Link>
+              </Button>
             </div>
           )}
         </div>

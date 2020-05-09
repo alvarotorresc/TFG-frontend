@@ -7,8 +7,8 @@ import { useParams, useHistory } from "react-router-dom";
 import {
   UPDATE_PHENOMENA,
   PHENOMENON_QUERY,
-  TYPES_QUERY,
 } from "../utils/graphql/phenomena.graphql";
+import { Types } from "../utils/Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -22,18 +22,13 @@ const validationSchema = Yup.object().shape({
   type: Yup.string().required("Required"),
 });
 
-let typeOptions: any[] = [];
-
-function useGetTypes(): void {
-  const { data, loading, refetch } = useQuery(TYPES_QUERY);
-  if (!loading && data) {
-    typeOptions = data.getPhenomena;
-  }
-  refetch();
+function ToArray(type: any) {
+  return Object.keys(type).map((key) => type[key]);
 }
 
+let typeOptions: Types[] = ToArray(Types);
+
 export default function EditPhenomena() {
-  useGetTypes();
   let history = useHistory();
 
   let { id } = useParams();
@@ -126,12 +121,7 @@ export default function EditPhenomena() {
         >
           <option value="" label="Select a type" />
           {typeOptions.map((option) => {
-            return (
-              <option
-                value={`${option.type}`}
-                label={`${option.type}`}
-              ></option>
-            );
+            return <option value={`${option}`} label={`${option}`}></option>;
           })}
         </select>
         <span className="error">{errors.type ? errors.type : null}</span>

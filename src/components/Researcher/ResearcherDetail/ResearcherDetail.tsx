@@ -10,26 +10,25 @@ import phenomenon from "../../../models/phenomenon";
 export default function ResearcherDetail() {
   let { id } = useParams();
 
+  id = id?.trim();
+
   const [researcher, setresearcher] = useState<any>(Object);
-  const { data, loading, error, refetch } = useQuery(RESEARCHER_QUERY, {
+  const { data, loading, error } = useQuery(RESEARCHER_QUERY, {
     variables: { id },
   });
 
-  console.log(loading, error, data, researcher);
+  console.log(loading, error, data, researcher, id);
 
   useEffect(() => {
-    console.log(data);
     if (!loading && data) {
       setresearcher(data);
     }
-    refetch();
-  }, [data, loading, refetch, researcher, id]);
+  }, [data, loading, researcher, id]);
 
   if (loading) return <Loading />;
-  if (error) return <p>Erro :</p>;
+  if (error) return <p>Error :</p>;
 
   if (researcher["researcher"]) {
-    console.log(researcher, data);
     const {
       firstName,
       lastName,

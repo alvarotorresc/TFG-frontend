@@ -31,6 +31,7 @@ const validationSchema = Yup.object().shape({
 export default function EditResearcher() {
   let { id } = useParams();
   id = String(id);
+  id = id.trim();
 
   let history = useHistory();
 

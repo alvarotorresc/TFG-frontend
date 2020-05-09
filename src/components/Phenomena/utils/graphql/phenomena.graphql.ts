@@ -17,13 +17,6 @@ query getPhenomena {
 }
 `
 
-export const TYPES_QUERY = gql`
-query getPhenomenaTypes {
-    getPhenomena {
-    type
-}
-}
-`
 
 export const PHENOMENON_QUERY = gql`
   query getPhenomenon($id: String!) {
@@ -88,17 +81,15 @@ export const CREATE_PHENOMENON = gql`
 export const CREATE_OCURRENCE = gql`
   mutation createOcurrence(
     $phenomenaId: String!
-    $date: DateTime!
+    $date: Date!
     $description: String!
-    $ubication: JSON!
     $witness: Boolean!
     $resolved: Boolean!
   ) {
     createOcurrence(
-      data: {
+      dto: {
         phenomenaId: $phenomenaId
         date: $date
-        ubication: $ubication
         description: $description
         witness: $witness
         resolved: $resolved
