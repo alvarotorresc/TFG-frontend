@@ -41,11 +41,10 @@ export const PHENOMENON_QUERY = gql`
   }
 `;
 export const OCURRENCE_QUERY = gql`
-  query getOcurrence($idO: String!) {
-    getOcurrence(id: $idO) {
+  query getOcurrence($id: String!) {
+    getOcurrence(id: $id) {
       id
       date
-      ubication
       description
       witness
       resolved
@@ -122,19 +121,15 @@ export const UPDATE_PHENOMENA = gql`
 export const UPDATE_OCURRENCE = gql`
   mutation updateOcurrence(
     $id: String!
-    $phenomenaId: Int!
-    $date: DateTime!
+    $date: Date!
     $description: String!
-    $ubication: JSON!
     $witness: Boolean!
     $resolved: Boolean!
   ) {
     updateOcurrence (
-      id: $id,
-      ocurrence: {
-        phenomenaId: $phenomenaId
+      dto: {
+        ocurrenceId: $id
         date: $date
-        ubication: $ubication
         description: $description
         witness: $witness
         resolved: $resolved

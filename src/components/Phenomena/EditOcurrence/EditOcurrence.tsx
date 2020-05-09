@@ -22,7 +22,6 @@ const validationSchema = Yup.object().shape({
     .min(10, "Too Short!")
     .max(200, "Too Long!")
     .required("Required"),
-  phenomenaId: Yup.number().required("Required").positive("Positive"),
   date: Yup.date().required(),
 });
 export default function EditOcurrence() {
@@ -30,13 +29,12 @@ export default function EditOcurrence() {
 
   let { id } = useParams();
   id = String(id);
-  let idO = parseInt(id);
 
   const [updateOcurrence] = useMutation(UPDATE_OCURRENCE);
 
   const [ocurrence, setOcurrence] = useState(Object);
   const { data, loading, refetch } = useQuery(OCURRENCE_QUERY, {
-    variables: { idO },
+    variables: { id },
   });
 
   useEffect(() => {
@@ -46,18 +44,11 @@ export default function EditOcurrence() {
     refetch();
   }, [data, loading, refetch]);
 
-  let date,
-    ubication,
-    description,
-    witness,
-    resolved,
-    phenomenaId: unknown,
-    phenomenaName;
+  let date, description, witness, resolved, phenomenaId: unknown, phenomenaName;
 
   if (ocurrence["getOcurrence"]) {
     description = ocurrence.getOcurrence.description;
     date = ocurrence.getOcurrence.date;
-    ubication = ocurrence.getOcurrence.ubication;
     witness = ocurrence.getOcurrence.witness;
     id = ocurrence.getOcurrence.id;
     resolved = ocurrence.getOcurrence.resolved;
@@ -80,7 +71,6 @@ export default function EditOcurrence() {
       phenomenaId: phenomenaId,
       witness: witness,
       resolved: resolved,
-      ubication: ubication,
       date: date,
     },
     validationSchema,
