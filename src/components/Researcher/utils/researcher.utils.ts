@@ -1,8 +1,8 @@
 
 // eslint-disable-next-line
 enum Rol {
-  ADMIN = "ADMIN",
-  RESEARCHER = "RESEARCHER",
+  admin = "admin",
+  researcher = "researcher",
 }
 
 export const urlImages = [

@@ -60,7 +60,7 @@ export default function CreateResearcher() {
       password: "",
       nationality: "",
       age: "",
-      rol: "Researcher",
+      rol: "researcher",
       image: "https://semantic-ui.com/images/avatar/large/steve.jpg",
     },
     validationSchema,

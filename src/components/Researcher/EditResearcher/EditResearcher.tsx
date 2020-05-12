@@ -151,10 +151,10 @@ export default function EditResearcher() {
           id="admin"
           name="rol"
           style={{ fontSize: "25px", marginTop: "10px " }}
-          onChange={() => setFieldValue("rol", "Admin")}
+          onChange={() => setFieldValue("rol", "admin")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "Admin"}
+          checked={values.rol === "admin"}
         ></Form.Radio>
         <Form.Radio
           type="radio"
@@ -162,10 +162,10 @@ export default function EditResearcher() {
           name="rol"
           label="Researcher"
           style={{ fontSize: "25px" }}
-          onChange={() => setFieldValue("rol", "Researcher")}
+          onChange={() => setFieldValue("rol", "researcher")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "Researcher"}
+          checked={values.rol === "researcher"}
         ></Form.Radio>
         <br></br>
         <label htmlFor="Rol">
