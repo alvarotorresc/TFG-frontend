@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function CreateResearcher() {
-  const [addResearcher, { error: mutationError }] = useMutation(ADD_RESEARCHER);
+  const [addResearcher] = useMutation(ADD_RESEARCHER);
 
   let history = useHistory();
 
@@ -161,10 +161,10 @@ export default function CreateResearcher() {
           id="admin"
           name="rol"
           style={{ fontSize: "25px", marginTop: "10px " }}
-          onChange={() => setFieldValue("rol", "Admin")}
+          onChange={() => setFieldValue("rol", "admin")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "Admin"}
+          checked={values.rol === "admin"}
         ></Form.Radio>
         <Form.Radio
           type="radio"
@@ -172,10 +172,10 @@ export default function CreateResearcher() {
           name="rol"
           label="Researcher"
           style={{ fontSize: "25px" }}
-          onChange={() => setFieldValue("rol", "Researcher")}
+          onChange={() => setFieldValue("rol", "researcher")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "Researcher"}
+          checked={values.rol === "researcher"}
         ></Form.Radio>
         <br></br>
         <label htmlFor="Rol">

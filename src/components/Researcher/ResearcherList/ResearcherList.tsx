@@ -1,78 +1,91 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { Grid, Header, Icon } from "semantic-ui-react";
+import { Grid, Header, Icon, Select } from "semantic-ui-react";
 import Researcher from "../Researcher/Researcher";
-import Loading from "../../Layout/Loading/Loading";
-import {
-  RESEARCHERS_QUERY,
-  DELETE_RESEARCHER,
-} from "../utils/graphql/researcher.graphql";
 import { ResearcherProps } from "../utils/props/researcher.props";
+import { sortedAscendant, sortedDescendant } from "../utils/researcher.utils";
 
-export default function ResearcherList() {
-  const { data, loading, error, refetch } = useQuery(RESEARCHERS_QUERY);
-  const [researchers, setResearchers] = useState<any>(Object);
-  const [deleteResearcher] = useMutation(DELETE_RESEARCHER);
+const rolOptions = ["admin", "researcher"];
 
-  async function handleDelete(id: number) {
-    await deleteResearcher({
-      variables: {
-        id,
-      },
-    });
-    refetch();
-  }
+function ResearcherList({ researchers, handleDelete, refetch }: any) {
+  const [researchersState, setResearchers] = useState<any>([]);
+  const [isOrdered, setOrdered] = useState<boolean>(false);
+  const [isFiltered, setFiltered] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!loading && data) {
-      setResearchers(data);
-    }
+    setResearchers(researchers);
     refetch();
-  }, [data, loading, refetch]);
+  }, [researchers, refetch]);
 
-  if (loading) return <Loading />;
-  if (error) return <p>Error :</p>;
-  if (researchers["researchers"])
-    return (
-      <div>
-        <Header as="h1" icon textAlign="center" style={{ paddingTop: "30px" }}>
-          <Icon name="user secret" circular />
-          <Header.Content>Researchers</Header.Content>
-        </Header>
-        <Grid style={{ padding: "6%" }} stackable>
-          <Grid.Row>
-            {researchers.researchers.map(
-              ({
-                id,
-                firstName,
-                lastName,
-                age,
-                email,
-                rol,
-                nationality,
-                image,
-                phenomena,
-              }: ResearcherProps) => {
-                return (
-                  <Researcher
-                    key={id}
-                    id={id}
-                    name={`${firstName}  ${lastName}`}
-                    email={email}
-                    age={age}
-                    rol={rol}
-                    image={image}
-                    nationality={nationality}
-                    phenomena={phenomena}
-                    handleDelete={handleDelete}
-                  />
-                );
-              }
-            )}
-          </Grid.Row>
-        </Grid>
-      </div>
+  function order() {
+    setOrdered(!isOrdered);
+    setResearchers(
+      researchersState
+        .slice()
+        .sort(isOrdered ? sortedAscendant : sortedDescendant)
     );
+  }
 
-  return <p>p</p>;
+  function filter() {
+    const rol = document.getElementById("selectRol");
+    console.log(rol);
+    console.log("object");
+    if (isFiltered) {
+      setResearchers(researchers);
+    } else {
+      setResearchers(
+        researchersState.slice().filter((res: any) => res.rol === rol)
+      );
+    }
+  }
+
+  return (
+    <div>
+      <Header as="h1" icon textAlign="center" style={{ paddingTop: "30px" }}>
+        <Icon name="user secret" circular />
+        <Header.Content>Researchers</Header.Content>
+      </Header>
+
+      <button onClick={order}>order</button>
+
+      <select onChange={filter} id="selectRol">
+        <option value="" label="Select a type" />
+        {rolOptions.map((option) => {
+          return <option value={`${option}`}>{option}</option>;
+        })}
+      </select>
+
+      <Grid style={{ padding: "6%" }} stackable>
+        <Grid.Row>
+          {researchersState.map(
+            ({
+              id,
+              firstName,
+              lastName,
+              age,
+              email,
+              rol,
+              nationality,
+              image,
+              phenomena,
+            }: ResearcherProps) => (
+              <Researcher
+                key={id}
+                id={id}
+                name={`${firstName}  ${lastName}`}
+                email={email}
+                age={age}
+                rol={rol}
+                image={image}
+                nationality={nationality}
+                phenomena={phenomena}
+                handleDelete={handleDelete}
+              />
+            )
+          )}
+        </Grid.Row>
+      </Grid>
+    </div>
+  );
 }
+
+export default ResearcherList;
