@@ -25,16 +25,19 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
     );
   }
 
-  function filter() {
-    const rol = document.getElementById("selectRol");
-    console.log(rol);
-    console.log("object");
+  function filter(e: any) {
+    const rol = e.target.value;
+
     if (isFiltered) {
       setResearchers(researchers);
+    }
+
+    if (rol === "") {
+      setResearchers(researchers);
+      setFiltered(false);
     } else {
-      setResearchers(
-        researchersState.slice().filter((res: any) => res.rol === rol)
-      );
+      setResearchers(researchers.filter((res: any) => res.rol === rol));
+      setFiltered(true);
     }
   }
 
@@ -47,7 +50,7 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
 
       <button onClick={order}>order</button>
 
-      <select onChange={filter} id="selectRol">
+      <select id="selectRol" onChange={filter}>
         <option value="" label="Select a type" />
         {rolOptions.map((option) => {
           return <option value={`${option}`}>{option}</option>;
