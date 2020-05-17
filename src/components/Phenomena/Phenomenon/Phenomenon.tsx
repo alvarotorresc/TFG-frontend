@@ -35,7 +35,6 @@ export default function Phenomenon({
   const [isOpen, setOpen] = useState<boolean>(false);
 
   function deleteResearcher() {
-    console.log(id);
     handleDelete(id);
     setOpen(false);
   }

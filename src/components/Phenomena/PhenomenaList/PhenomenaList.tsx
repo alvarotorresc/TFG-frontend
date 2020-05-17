@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Header, Icon } from "semantic-ui-react";
+import { Grid, Header, Icon, Button } from "semantic-ui-react";
 import Phenomenon from "../Phenomenon/Phenomenon";
 import { PhenomenaProps } from "../utils/props/phenomena.props";
 import {
   sortedAscendant,
   sortedDescendant,
-} from "../../Researcher/utils/researcher.utils";
+  Types,
+} from "../../Phenomena/utils/Phenomena.types";
+
+function ToArray(type: any) {
+  return Object.keys(type).map((key) => type[key]);
+}
+
+let typeOptions: Types[] = ToArray(Types);
 
 function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
   const [phenomenaState, setPhenomena] = useState<any>([]);
@@ -37,7 +44,7 @@ function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
       setPhenomena(phenomena);
       setFiltered(false);
     } else {
-      setPhenomena(phenomena.filter((res: any) => res.rol === rol));
+      setPhenomena(phenomena.filter((res: any) => res.type === rol));
       setFiltered(true);
     }
   }
@@ -48,6 +55,20 @@ function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
         <Icon name="image outline" circular />
         <Header.Content>Phenomena List</Header.Content>
       </Header>
+      <Button onClick={order} icon labelPosition="right">
+        {isOrdered ? (
+          <Icon name="arrow circle up" />
+        ) : (
+          <Icon name="arrow circle down" />
+        )}
+        order
+      </Button>
+      <select className="select-css" onChange={filter}>
+        <option value="" label="Select a type" />
+        {typeOptions.map((option) => {
+          return <option value={`${option}`}>{option}</option>;
+        })}
+      </select>
       <Grid style={{ padding: "4%" }} columns={2} stackable>
         <Grid.Row>
           {phenomenaState.map(
