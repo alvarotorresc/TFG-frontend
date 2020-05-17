@@ -44,7 +44,6 @@ export default function EditResearcher() {
 
   useEffect(() => {
     if (!loading && data) {
-      console.log(data);
       setresearcher(data);
     }
     refetch();
@@ -68,7 +67,6 @@ export default function EditResearcher() {
     initialValues: { ...initialValues },
     validationSchema,
     onSubmit(values, { resetForm }) {
-      console.log(values);
       updateResearcher({
         variables: {
           ...values,

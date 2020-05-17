@@ -17,8 +17,6 @@ export default function ResearcherDetail() {
     variables: { id },
   });
 
-  console.log(loading, error, data, researcher, id);
-
   useEffect(() => {
     if (!loading && data) {
       setresearcher(data);

@@ -35,16 +35,6 @@ export default function CreateResearcher() {
 
   let history = useHistory();
 
-  onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
-      graphQLErrors.map(({ message, locations, path }) =>
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        )
-      );
-    if (networkError) console.log(`[Network error]: ${networkError}`);
-  });
-
   const {
     handleBlur,
     handleChange,
@@ -65,7 +55,6 @@ export default function CreateResearcher() {
     },
     validationSchema,
     onSubmit(values, { resetForm }) {
-      console.log(values);
       addResearcher({
         variables: {
           ...values,
