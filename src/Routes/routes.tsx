@@ -8,11 +8,11 @@ import ResearcherDetail from "../components/Researcher/ResearcherDetail/Research
 import CreatePhenomena from "../components/Phenomena/CreatePhenomena/CreatePhenomena";
 import CreateOcurrence from "../components/Phenomena/CreateOcurrence/CreateOcurrence";
 import CreateResearcher from "../components/Researcher/CreateResearcher/CreateResearcher";
-import PhenomenaList from "../components/Phenomena/PhenomenaList/PhenomenaList";
 import LoginForm from "../components/Auth/SignIn/SignIn";
 import PostList from "../components/Post/PostList/PostList";
 import Landing from "../components/Landing/Landing";
 import ResearcherContainer from "../components/Researcher/ResearcherContainer/ResearcherContainer";
+import PhenomenaContainer from "../components/Phenomena/PhenomenaContainer/PhenomenaContainer";
 
 export default function RoutesComponent() {
   return (
@@ -26,7 +26,7 @@ export default function RoutesComponent() {
       <Route path="/ocurrence/create" component={CreateOcurrence} />
       <Route path="/researcher/create" component={CreateResearcher} />
       <Route path="/researchers" component={ResearcherContainer} />
-      <Route path="/phenomena" component={PhenomenaList} />
+      <Route path="/phenomena" component={PhenomenaContainer} />
       <Route path="/signin" component={LoginForm} />
       <Route path="/posts" component={PostList} />
       <Route path="/" component={Landing} />

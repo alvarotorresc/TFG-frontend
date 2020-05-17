@@ -38,7 +38,6 @@ export default function CreatePhenomena() {
     },
     validationSchema,
     onSubmit(values, { resetForm }) {
-      console.log(values);
       createPhenomenon({
         variables: {
           ...values,

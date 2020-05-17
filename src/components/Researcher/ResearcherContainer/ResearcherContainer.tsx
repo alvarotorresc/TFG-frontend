@@ -12,7 +12,7 @@ export default function ResearcherContainer() {
   const [researchers, setResearchers] = useState<any>([]);
   const [deleteResearcher] = useMutation(DELETE_RESEARCHER);
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: string) {
     await deleteResearcher({
       variables: {
         id,
@@ -36,6 +36,6 @@ export default function ResearcherContainer() {
       researchers={researchers}
       handleDelete={handleDelete}
       refetch={refetch}
-    ></ResearcherList>
+    />
   );
 }

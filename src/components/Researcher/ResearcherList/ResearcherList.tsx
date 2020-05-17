@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Header, Icon, Select } from "semantic-ui-react";
+import { Grid, Header, Icon, Button } from "semantic-ui-react";
 import Researcher from "../Researcher/Researcher";
 import { ResearcherProps } from "../utils/props/researcher.props";
 import { sortedAscendant, sortedDescendant } from "../utils/researcher.utils";
+import "./list.css";
 
 const rolOptions = ["admin", "researcher"];
 
@@ -48,9 +49,16 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
         <Header.Content>Researchers</Header.Content>
       </Header>
 
-      <button onClick={order}>order</button>
+      <Button onClick={order} icon labelPosition="right">
+        {isOrdered ? (
+          <Icon name="arrow circle up" />
+        ) : (
+          <Icon name="arrow circle down" />
+        )}
+        order
+      </Button>
 
-      <select id="selectRol" onChange={filter}>
+      <select className="select-css" onChange={filter}>
         <option value="" label="Select a type" />
         {rolOptions.map((option) => {
           return <option value={`${option}`}>{option}</option>;
