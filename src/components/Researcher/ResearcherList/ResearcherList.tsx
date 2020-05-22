@@ -14,7 +14,9 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
 
   useEffect(() => {
     setResearchers(researchers);
-    refetch();
+    if (refetch) {
+      refetch();
+    }
   }, [researchers, refetch]);
 
   function order() {

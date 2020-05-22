@@ -21,7 +21,9 @@ function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
 
   useEffect(() => {
     setPhenomena(phenomena);
-    refetch();
+    if (refetch) {
+      refetch();
+    }
   }, [phenomena, refetch]);
 
   function order() {

@@ -44,7 +44,6 @@ export default function CreateOcurrence() {
     },
     validationSchema,
     onSubmit(values, { resetForm }) {
-      console.log(values);
       createPhenomenon({
         variables: {
           ...values,
