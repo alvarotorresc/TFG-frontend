@@ -61,6 +61,7 @@ export default function Researcher({
                 open={isOpen}
                 onCancel={() => setOpen(!isOpen)}
                 onConfirm={deleteResearcher}
+                content={`Are you sure you want to delete the researcher: ${name}`}
               />
               <Button
                 basic

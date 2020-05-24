@@ -80,6 +80,7 @@ export default function Phenomenon({
                 open={isOpen}
                 onCancel={() => setOpen(!isOpen)}
                 onConfirm={deleteResearcher}
+                content={`Are you sure you want to delete the phenomenon: ${title}`}
               />
               <Button
                 basic
