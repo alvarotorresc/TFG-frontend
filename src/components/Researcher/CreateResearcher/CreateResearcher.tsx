@@ -6,12 +6,7 @@ import * as Yup from "yup";
 import { urlImages } from "../utils/researcher.utils";
 import "./createresearcher.css";
 import { useHistory } from "react-router-dom";
-import {
-  ADD_RESEARCHER,
-  RESEARCHERS_QUERY,
-} from "../utils/graphql/researcher.graphql";
-import { onError } from "@apollo/link-error";
-import { UPDATE_OCURRENCE } from "../../Phenomena/utils/graphql/phenomena.graphql";
+import { ADD_RESEARCHER } from "../utils/graphql/researcher.graphql";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()

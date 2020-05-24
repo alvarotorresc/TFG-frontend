@@ -12,7 +12,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "./types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { UPDATE_OCURRENCE } from "../../Phenomena/utils/graphql/phenomena.graphql";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginForm() {
-  const datalogin: any = "";
+  const history = useHistory();
   const [signIn] = useMutation(LOGIN);
   const {
     handleBlur,
@@ -42,20 +42,28 @@ function LoginForm() {
         },
         update(cache, { data }) {
           console.log(data);
+          localStorage.setItem("token", data.login.accessToken);
+          localStorage.setItem("researcherId", data.login.researcherId);
         },
       });
       resetForm();
+      history.push("/");
     },
   });
 
   return (
-    <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <div style={{ backgroundColor: "white" }}>
+    <Grid
+      textAlign="center"
+      style={{ height: "100vh" }}
+      verticalAlign="middle"
+      centered
+    >
+      <Grid.Column style={{ maxWidth: 650 }}>
+        <div style={{ backgroundColor: "white", alignContent: "center" }}>
           <Header as="h2" color="teal" textAlign="center">
             <Image src="/logo192.png" /> Log-in to your account
           </Header>
-          <Form size="large" onSubmit={handleSubmit}>
+          <Form size="large" onSubmit={handleSubmit} ce>
             <Segment stacked>
               <Input
                 fluid

@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import EditPhenomena from "../components/Phenomena/EditPhenomena/EditPhenomena";
 import EditOcurrence from "../components/Phenomena/EditOcurrence/EditOcurrence";
 import EditResearcher from "../components/Researcher/EditResearcher/EditResearcher";
@@ -17,19 +17,55 @@ import PhenomenaContainer from "../components/Phenomena/PhenomenaContainer/Pheno
 export default function RoutesComponent() {
   return (
     <Switch>
-      <Route path="/phenomenon/edit/:id" component={EditPhenomena} />
-      <Route path="/ocurrence/edit/:id" component={EditOcurrence} />
-      <Route path="/researcher/edit/:id" component={EditResearcher} />
-      <Route path="/phenomena/:id" component={PhenomenonDetail} />
-      <Route path="/researchers/:id" component={ResearcherDetail} />
-      <Route path="/phenomenon/create" component={CreatePhenomena} />
-      <Route path="/ocurrence/create" component={CreateOcurrence} />
-      <Route path="/researcher/create" component={CreateResearcher} />
-      <Route path="/researchers" component={ResearcherContainer} />
-      <Route path="/phenomena" component={PhenomenaContainer} />
-      <Route path="/signin" component={LoginForm} />
-      <Route path="/posts" component={PostList} />
-      <Route path="/" component={Landing} />
+      <Route
+        exact
+        strict
+        path="/phenomenon/edit/:id"
+        component={EditPhenomena}
+      />
+      <Route
+        exact
+        strict
+        path="/ocurrence/edit/:id"
+        component={EditOcurrence}
+      />
+      <Route
+        exact
+        strict
+        path="/researcher/edit/:id"
+        component={EditResearcher}
+      />
+      <Route exact strict path="/phenomena/:id" component={PhenomenonDetail} />
+      <Route
+        exact
+        strict
+        path="/researchers/:id"
+        component={ResearcherDetail}
+      />
+      <Route
+        exact
+        strict
+        path="/phenomenon/create"
+        component={CreatePhenomena}
+      />
+      <Route
+        exact
+        strict
+        path="/ocurrence/create"
+        component={CreateOcurrence}
+      />
+      <Route
+        exact
+        strict
+        path="/researcher/create"
+        component={CreateResearcher}
+      />
+      <Route exact strict path="/researchers" component={ResearcherContainer} />
+      <Route exact strict path="/phenomena" component={PhenomenaContainer} />
+      <Route exact strict path="/signin" component={LoginForm} />
+      <Route exact strict path="/posts" component={PostList} />
+      <Route exact strict path="/" component={Landing} />
+      <Route exact strict render={() => <Redirect to="/" />} />
     </Switch>
   );
 }

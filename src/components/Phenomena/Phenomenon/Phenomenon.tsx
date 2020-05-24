@@ -81,6 +81,19 @@ export default function Phenomenon({
                 onCancel={() => setOpen(!isOpen)}
                 onConfirm={deleteResearcher}
               />
+              <Button
+                basic
+                color="blue"
+                style={{ marginTop: "10px" }}
+                className="delete"
+              >
+                <Link
+                  to={{ pathname: `/phenomenon/edit/${id} ` }}
+                  style={{ color: "blue" }}
+                >
+                  Edit
+                </Link>
+              </Button>
             </div>
           </Card.Content>
         )}

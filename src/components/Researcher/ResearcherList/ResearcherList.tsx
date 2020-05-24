@@ -4,6 +4,7 @@ import Researcher from "../Researcher/Researcher";
 import { ResearcherProps } from "../utils/props/researcher.props";
 import { sortedAscendant, sortedDescendant } from "../utils/researcher.utils";
 import "./list.css";
+import { Link } from "react-router-dom";
 
 const rolOptions = ["admin", "researcher"];
 
@@ -13,7 +14,7 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
   const [isFiltered, setFiltered] = useState<boolean>(false);
 
   useEffect(() => {
-    setResearchers(researchers);
+    setResearchers(researchers.slice().sort(sortedAscendant));
     if (refetch) {
       refetch();
     }
@@ -50,6 +51,12 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
         <Icon name="user secret" circular />
         <Header.Content>Researchers</Header.Content>
       </Header>
+
+      <Button onClick={() => localStorage.clear()}>Logout</Button>
+
+      <Button as={Link} to="/researcher/create">
+        Create
+      </Button>
 
       <Button onClick={order} icon labelPosition="right">
         {isOrdered ? (

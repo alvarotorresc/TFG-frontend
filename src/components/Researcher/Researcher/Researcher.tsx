@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./researcher.css";
 import { CardProps } from "../utils/props/researcher.props";
 
-let e = "e";
+let authenticatedBool = true;
 
 function nameLink(name: string, id: number) {
   return (
@@ -46,7 +46,7 @@ export default function Researcher({
         <div>
           <Icon name="mail" />
           {email}
-          {e === "e" && (
+          {authenticatedBool === true && (
             <div className="ui two buttons delete">
               <Button
                 basic

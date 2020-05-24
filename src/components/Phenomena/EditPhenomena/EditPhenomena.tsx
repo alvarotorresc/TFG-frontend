@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import {
   UPDATE_PHENOMENA,
   PHENOMENON_QUERY,
@@ -32,6 +32,8 @@ export default function EditPhenomena() {
   let history = useHistory();
 
   let { id } = useParams();
+  id = String(id);
+  id = id.trim();
 
   const [updatePhenomenon] = useMutation(UPDATE_PHENOMENA);
 
@@ -78,58 +80,70 @@ export default function EditPhenomena() {
       history.push("/phenomena");
     },
   });
+
+  if (phenomenon["getPhenomenon"]) {
+    return (
+      <Grid centered textAlign="center" id="grid">
+        <h1>Edit an existing Phenomenon</h1>
+        <Form onSubmit={handleSubmit} size={"huge"}>
+          <Input
+            disabled
+            type="text"
+            value={`${researcherFirst} ${researcherLast}`}
+            name="researcherName"
+            className="input"
+          />
+          <br />
+          <Input
+            type="text"
+            placeholder={"Title"}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.title}
+            name="title"
+            className="input"
+          />
+          <span className="error">{errors.title ? errors.title : null}</span>
+          <Input
+            type="text"
+            placeholder={"Description"}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.description}
+            name="description"
+            className="input"
+          />
+          <span className="error">
+            {errors.description ? errors.description : null}
+          </span>
+          <br />
+          <select
+            name="type"
+            value={values.type}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          >
+            <option value="" label="Select a type" />
+            {typeOptions.map((option) => {
+              return <option value={`${option}`} label={`${option}`}></option>;
+            })}
+          </select>
+          <span className="error">{errors.type ? errors.type : null}</span>
+          <br />
+          <Button type="submit" style={{ margin: "50px" }} size="big">
+            Submit
+          </Button>
+        </Form>
+      </Grid>
+    );
+  }
+
   return (
-    <Grid centered textAlign="center" id="grid">
-      <h1>Edit an existing Phenomenon</h1>
-      <Form onSubmit={handleSubmit} size={"huge"}>
-        <Input
-          disabled
-          type="text"
-          value={`${researcherFirst} ${researcherLast}`}
-          name="researcherName"
-          className="input"
-        />
-        <br />
-        <Input
-          type="text"
-          placeholder={"Title"}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.title}
-          name="title"
-          className="input"
-        />
-        <span className="error">{errors.title ? errors.title : null}</span>
-        <Input
-          type="text"
-          placeholder={"Description"}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.description}
-          name="description"
-          className="input"
-        />
-        <span className="error">
-          {errors.description ? errors.description : null}
-        </span>
-        <br />
-        <select
-          name="type"
-          value={values.type}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        >
-          <option value="" label="Select a type" />
-          {typeOptions.map((option) => {
-            return <option value={`${option}`} label={`${option}`}></option>;
-          })}
-        </select>
-        <span className="error">{errors.type ? errors.type : null}</span>
-        <br />
-        <Button type="submit" style={{ margin: "50px" }} size="big">
-          Submit
-        </Button>
-      </Form>
-    </Grid>
+    <div style={{ padding: "20%" }}>
+      <h1>No one phenomena with this ID</h1>
+      <Button as={Link} to="/phenomena">
+        Go Phenomena
+      </Button>
+    </div>
   );
 }

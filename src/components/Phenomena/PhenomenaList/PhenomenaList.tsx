@@ -7,6 +7,7 @@ import {
   sortedDescendant,
   Types,
 } from "../../Phenomena/utils/Phenomena.types";
+import { Link } from "react-router-dom";
 
 function ToArray(type: any) {
   return Object.keys(type).map((key) => type[key]);
@@ -20,7 +21,7 @@ function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
   const [isFiltered, setFiltered] = useState<boolean>(false);
 
   useEffect(() => {
-    setPhenomena(phenomena);
+    setPhenomena(phenomena.slice().sort(sortedAscendant));
     if (refetch) {
       refetch();
     }
@@ -57,6 +58,9 @@ function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
         <Icon name="image outline" circular />
         <Header.Content>Phenomena List</Header.Content>
       </Header>
+      <Button as={Link} to="/phenomenon/create">
+        Create
+      </Button>
       <Button onClick={order} icon labelPosition="right">
         {isOrdered ? (
           <Icon name="arrow circle up" />
