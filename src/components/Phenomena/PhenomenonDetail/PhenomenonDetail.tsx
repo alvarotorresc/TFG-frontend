@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   PHENOMENON_QUERY,
   DELETE_OCURRENCE,
 } from "../utils/graphql/phenomena.graphql";
 import Loading from "../../Layout/Loading/Loading";
-import { Header, Icon, Grid, Image, Divider } from "semantic-ui-react";
+import { Header, Icon, Grid, Image, Divider, Button } from "semantic-ui-react";
 import Ocurrence from "../Ocurrence/Ocurrence";
 import { OcurrencesProps } from "../utils/props/phenomena.props";
 
@@ -88,6 +88,11 @@ export default function PhenomenonDetail() {
           <Divider horizontal style={{ fontSize: "30px" }}>
             Ocurrences
           </Divider>
+
+          <Button as={Link} to="/ocurrence/create">
+            Create Ocurrence
+          </Button>
+
           {isOcurrences === 0 ? (
             <Grid.Row centered style={{ minHeight: "85px" }}>
               <h1>There are not ocurrences yet</h1>

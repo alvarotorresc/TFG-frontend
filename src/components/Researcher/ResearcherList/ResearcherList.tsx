@@ -52,8 +52,6 @@ function ResearcherList({ researchers, handleDelete, refetch }: any) {
         <Header.Content>Researchers</Header.Content>
       </Header>
 
-      <Button onClick={() => localStorage.clear()}>Logout</Button>
-
       <Button as={Link} to="/researcher/create">
         Create
       </Button>

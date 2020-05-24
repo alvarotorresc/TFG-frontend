@@ -3,7 +3,10 @@ import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
 import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
-import { CREATE_PHENOMENON } from "../utils/graphql/phenomena.graphql";
+import {
+  CREATE_PHENOMENON,
+  PHENOMENA_QUERY,
+} from "../utils/graphql/phenomena.graphql";
 import "./createphenomena.css";
 import { useHistory } from "react-router-dom";
 import { Types } from "../utils/Phenomena.types";
@@ -42,6 +45,7 @@ export default function CreatePhenomena() {
         variables: {
           ...values,
         },
+        refetchQueries: [{ query: PHENOMENA_QUERY }],
       });
       resetForm();
       history.push("/phenomena");

@@ -6,7 +6,10 @@ import * as Yup from "yup";
 import { urlImages } from "../utils/researcher.utils";
 import "./createresearcher.css";
 import { useHistory } from "react-router-dom";
-import { ADD_RESEARCHER } from "../utils/graphql/researcher.graphql";
+import {
+  ADD_RESEARCHER,
+  RESEARCHERS_QUERY,
+} from "../utils/graphql/researcher.graphql";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -58,6 +61,7 @@ export default function CreateResearcher() {
         variables: {
           ...values,
         },
+        refetchQueries: [{ query: RESEARCHERS_QUERY }],
       });
       resetForm();
       history.push("/researchers");

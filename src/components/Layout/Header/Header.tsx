@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 function FixedMenuLayout() {
@@ -22,6 +22,12 @@ function FixedMenuLayout() {
       <Menu.Item as={Link} to="/phenomena">
         Phenomena
       </Menu.Item>
+
+      <Menu.Menu position="right">
+        <Menu.Item as={Button} onClick={() => localStorage.clear()}>
+          Logout
+        </Menu.Item>
+      </Menu.Menu>
 
       <Menu.Menu position="right">
         <Menu.Item as={Link} to="/signin">
