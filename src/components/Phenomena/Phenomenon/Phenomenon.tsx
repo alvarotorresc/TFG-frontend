@@ -83,17 +83,14 @@ export default function Phenomenon({
                 content={`Are you sure you want to delete the phenomenon: ${title}`}
               />
               <Button
+                as={Link}
                 basic
                 color="blue"
                 style={{ marginTop: "10px" }}
                 className="delete"
+                to={{ pathname: `/phenomenon/edit/${id} ` }}
               >
-                <Link
-                  to={{ pathname: `/phenomenon/edit/${id} ` }}
-                  style={{ color: "blue" }}
-                >
-                  Edit
-                </Link>
+                Edit
               </Button>
             </div>
           </Card.Content>

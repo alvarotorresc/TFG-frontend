@@ -9,6 +9,7 @@ import Loading from "../../Layout/Loading/Loading";
 import { Header, Icon, Grid, Image, Divider, Button } from "semantic-ui-react";
 import Ocurrence from "../Ocurrence/Ocurrence";
 import { OcurrencesProps } from "../utils/props/phenomena.props";
+import { sortedAscendantDate } from "../../Researcher/utils/researcher.utils";
 
 export default function PhenomenonDetail() {
   let { id } = useParams();
@@ -20,6 +21,7 @@ export default function PhenomenonDetail() {
   const { data, loading, error, refetch } = useQuery(PHENOMENON_QUERY, {
     variables: { id },
   });
+  const [ocurrencesState, setocurrences] = useState(null);
 
   async function handleDelete(id: String) {
     await deleteOcurrence({
@@ -33,6 +35,9 @@ export default function PhenomenonDetail() {
   useEffect(() => {
     if (!loading && data) {
       setPhenomenon(data);
+      setocurrences(
+        data.getPhenomenon?.ocurrences.slice().sort(sortedAscendantDate)
+      );
     }
     refetch();
   }, [id, data, loading, refetch]);
@@ -40,13 +45,7 @@ export default function PhenomenonDetail() {
   if (loading) return <Loading />;
   if (error) return <p>Error :</p>;
   if (phenomenon["getPhenomenon"]) {
-    const {
-      title,
-      description,
-      type,
-      researcher,
-      ocurrences,
-    } = phenomenon.getPhenomenon;
+    const { title, description, type, researcher } = phenomenon.getPhenomenon;
 
     const isOcurrences = phenomenon.getPhenomenon.ocurrences.length;
 
@@ -89,18 +88,23 @@ export default function PhenomenonDetail() {
             Ocurrences
           </Divider>
 
-          <Button as={Link} to="/ocurrence/create">
-            Create Ocurrence
-          </Button>
+          <Button
+            as={Link}
+            to={`/ocurrence/create/${id}`}
+            icon="add"
+            labelPosition="left"
+            content="Create Ocurrence"
+          />
 
           {isOcurrences === 0 ? (
             <Grid.Row centered style={{ minHeight: "85px" }}>
               <h1>There are not ocurrences yet</h1>
             </Grid.Row>
           ) : (
-            ocurrences.map((ocurrence: OcurrencesProps) => {
+            // @ts-ignore
+            ocurrencesState.map((ocurrence: OcurrencesProps) => {
               return (
-                <Grid.Row centered stretched>
+                <Grid.Row centered stretched key={ocurrence.id}>
                   <Ocurrence
                     id={ocurrence.id}
                     date={ocurrence.date}
@@ -119,5 +123,12 @@ export default function PhenomenonDetail() {
       </div>
     );
   }
-  return <p>p</p>;
+  return (
+    <div style={{ padding: "20%" }}>
+      <h1>No one phenomena with this ID</h1>
+      <Button as={Link} to="/phenomena">
+        Go Phenomena
+      </Button>
+    </div>
+  );
 }

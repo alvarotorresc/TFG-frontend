@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { Grid, Header, Icon, Image } from "semantic-ui-react";
+import { Grid, Header, Icon, Image, Button } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
 import { RESEARCHER_QUERY } from "../utils/graphql/researcher.graphql";
 import "./detail.css";
 import phenomenon from "../../../models/phenomenon";
+import ResearcherList from "../ResearcherList/ResearcherList";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
@@ -106,5 +107,12 @@ export default function ResearcherDetail() {
     );
   }
 
-  return <p>p</p>;
+  return (
+    <div style={{ padding: "20%" }}>
+      <h1>No one researcher with this ID</h1>
+      <Button as={Link} to="/researchers">
+        Go ResearcherList
+      </Button>
+    </div>
+  );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { OcurrencesProps } from "../utils/props/phenomena.props";
 import { Container, Card, Icon, Button, Confirm } from "semantic-ui-react";
 import "./Ocurrence.css";
+import { Link } from "react-router-dom";
 
 let e = "e";
 
@@ -83,6 +84,17 @@ export default function Ocurrence({
                 onCancel={() => setOpen(!isOpen)}
                 onConfirm={deleteOcurrence}
               />
+
+              <Button
+                as={Link}
+                basic
+                color="blue"
+                style={{ marginTop: "10px" }}
+                className="delete"
+                to={{ pathname: `/ocurrence/edit/${id}` }}
+              >
+                Edit
+              </Button>
             </div>
           </Card.Content>
         )}

@@ -51,7 +51,7 @@ export default function RoutesComponent() {
       <Route
         exact
         strict
-        path="/ocurrence/create"
+        path="/ocurrence/create/:phenomenonId"
         component={CreateOcurrence}
       />
       <Route

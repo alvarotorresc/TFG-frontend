@@ -9,6 +9,7 @@ import {
   PHENOMENON_QUERY,
 } from "../utils/graphql/phenomena.graphql";
 import { Types } from "../utils/Phenomena.types";
+import Loading from "../../Layout/Loading/Loading";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -80,6 +81,8 @@ export default function EditPhenomena() {
       history.push("/phenomena");
     },
   });
+
+  if (loading) return <Loading />;
 
   if (phenomenon["getPhenomenon"]) {
     return (

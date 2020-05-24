@@ -64,17 +64,14 @@ export default function Researcher({
                 content={`Are you sure you want to delete the researcher: ${name}`}
               />
               <Button
+                as={Link}
                 basic
                 color="blue"
                 style={{ marginTop: "10px" }}
                 className="delete"
+                to={{ pathname: `/researcher/edit/${id} ` }}
               >
-                <Link
-                  to={{ pathname: `/researcher/edit/${id} ` }}
-                  style={{ color: "blue" }}
-                >
-                  Edit
-                </Link>
+                Edit
               </Button>
             </div>
           )}

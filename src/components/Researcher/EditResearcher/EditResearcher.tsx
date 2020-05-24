@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "@apollo/client";
-import { Form, Input, Button, Grid, Divider } from "semantic-ui-react";
+import { Form, Input, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { useParams, Link } from "react-router-dom";
 import { urlImages } from "../utils/researcher.utils";
 import { useHistory } from "react-router-dom";
+import Loading from "../../Layout/Loading/Loading";
 import {
   UPDATE_RESEARCHER,
   RESEARCHER_QUERY,
@@ -76,6 +77,8 @@ export default function EditResearcher() {
       history.push("/researchers");
     },
   });
+
+  if (loading) return <Loading />;
 
   if (researcher["researcher"]) {
     return (

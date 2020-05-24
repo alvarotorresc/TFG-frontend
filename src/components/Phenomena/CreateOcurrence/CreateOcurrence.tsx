@@ -1,19 +1,12 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
-import {
-  Form,
-  Input,
-  Button,
-  Grid,
-  Checkbox,
-  TextArea,
-} from "semantic-ui-react";
+import { Form, Button, Grid, Checkbox, TextArea } from "semantic-ui-react";
 import * as Yup from "yup";
 import { CREATE_OCURRENCE } from "../utils/graphql/phenomena.graphql";
 import { DateTimeInput } from "semantic-ui-calendar-react";
 import "./createocurrence.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   description: Yup.string()
@@ -26,6 +19,10 @@ const validationSchema = Yup.object().shape({
 export default function CreateOcurrence() {
   let history = useHistory();
 
+  let { phenomenonId } = useParams();
+  let id = String(phenomenonId);
+  id = id.trim();
+
   const [createPhenomenon] = useMutation(CREATE_OCURRENCE);
   const {
     handleBlur,
@@ -37,7 +34,7 @@ export default function CreateOcurrence() {
   } = useFormik({
     initialValues: {
       description: "",
-      phenomenaId: "",
+      phenomenaId: id,
       witness: false,
       resolved: false,
       date: "",
@@ -57,19 +54,6 @@ export default function CreateOcurrence() {
     <Grid centered textAlign="center" id="grid">
       <Form onSubmit={handleSubmit} size={"huge"}>
         <h1>Create a new Ocurrence</h1>
-        <Input
-          type="text"
-          placeholder={"ID"}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.phenomenaId}
-          name="phenomenaId"
-          className="input"
-        />
-        <span className="error">
-          {errors.phenomenaId ? errors.phenomenaId : null}
-        </span>
-        <br />
         <TextArea
           type="textarea"
           placeholder={"Description"}
