@@ -65,20 +65,24 @@ function LoginForm() {
           </Header>
           <Form size="large" onSubmit={handleSubmit} ce>
             <Segment stacked>
-              <Input
+              <Form.Input
                 fluid
+                style={{ paddingRight: "5%" }}
                 icon="user"
                 name="email"
                 type="email"
+                error={errors.email ? true : null}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}
                 iconPosition="left"
                 placeholder="E-mail address"
               />
-              <Input
+              <Form.Input
+                error={errors.password ? true : null}
                 fluid
                 icon="lock"
+                style={{ paddingRight: "5%" }}
                 iconPosition="left"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -87,7 +91,6 @@ function LoginForm() {
                 name="password"
                 type="password"
               />
-
               <Button color="teal" fluid size="large" type="submit">
                 Login
               </Button>

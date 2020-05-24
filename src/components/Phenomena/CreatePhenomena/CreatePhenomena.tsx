@@ -55,48 +55,41 @@ export default function CreatePhenomena() {
   return (
     <Grid centered textAlign="center" id="grid">
       <h1>Create a new Phenomenon</h1>
-      <Form onSubmit={handleSubmit} size={"huge"}>
-        <Input
+      <Form onSubmit={handleSubmit} size={"huge"} style={{ width: "100%" }}>
+        <Form.Input
           type="text"
           placeholder={"ID"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.researcherId}
           name="researcherId"
-          className="input"
         />
-        <span className="error">
-          {errors.researcherId ? errors.researcherId : null}
-        </span>
         <br />
-        <Input
+        <Form.Input
           type="text"
           placeholder={"Title"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.title}
           name="title"
-          className="input"
+          error={errors.title ? errors.title : null}
         />
-        <span className="error">{errors.title ? errors.title : null}</span>
-        <Input
+        <Form.Input
           type="text"
           placeholder={"Description"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.description}
           name="description"
-          className="input"
+          error={errors.description ? errors.description : null}
         />
-        <span className="error">
-          {errors.description ? errors.description : null}
-        </span>
         <br />
         <select
           name="type"
           value={values.type}
           onChange={handleChange}
           onBlur={handleBlur}
+          style={{ marginLeft: "13px" }}
         >
           <option value="" label="Select a type" />
           {typeOptions.map((option) => {

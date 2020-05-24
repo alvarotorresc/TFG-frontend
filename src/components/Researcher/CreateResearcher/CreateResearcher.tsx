@@ -72,76 +72,62 @@ export default function CreateResearcher() {
     <Grid centered textAlign="center" id="grid">
       <h1>Create a new Researcher</h1>
       <Form onSubmit={handleSubmit} size={"huge"}>
-        <Input
+        <Form.Input
           type="text"
+          error={errors.firstName ? errors.firstName : null}
           placeholder={"First Name"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.firstName}
           name="firstName"
-          className="input"
         />
-        <span className="error">
-          {errors.firstName ? errors.firstName : null}
-        </span>
-        <Input
+        <Form.Input
           type="text"
+          error={errors.lastName ? errors.lastName : null}
           placeholder={"Last Name"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.lastName}
           name="lastName"
-          className="input"
         />
-        <span className="error">
-          {errors.lastName ? errors.lastName : null}
-        </span>
         <br />
-        <Input
+        <Form.Input
           type="text"
+          error={errors.email ? errors.email : null}
           placeholder={"Email"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
           name="email"
-          className="input"
         />
-        <span className="error">{errors.email ? errors.email : null}</span>
-        <Input
+        <Form.Input
           type="password"
+          error={errors.password ? errors.password : null}
           placeholder={"Password"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
           name="password"
-          className="input"
         />
-        <span className="error">
-          {errors.password ? errors.password : null}
-        </span>
         <br />
-        <Input
+        <Form.Input
           type="text"
+          error={errors.nationality ? errors.nationality : null}
           placeholder={"Nationality"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.nationality}
           name="nationality"
-          className="input"
         />
-        <span className="error">
-          {errors.nationality ? errors.nationality : null}
-        </span>
-        <Input
+        <Form.Input
           type="number"
+          error={errors.age ? errors.age : null}
           placeholder={"Age"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.age}
           name="age"
-          className="input"
         />
-        <span className="error">{errors.age ? errors.age : null}</span>
         <br></br>
         <label htmlFor="Rol">
           <h1>Select a Rol</h1>

@@ -75,6 +75,7 @@ export default function CreateOcurrence() {
           value={values.date}
           dateTimeFormat={"YYYY-MM-DD HH:MM:SS UTC"}
           iconPosition="left"
+          style={{ marginLeft: "1px" }}
           onChange={(e, { name, value }) =>
             setFieldValue(name, new Date(value).toISOString())
           }
