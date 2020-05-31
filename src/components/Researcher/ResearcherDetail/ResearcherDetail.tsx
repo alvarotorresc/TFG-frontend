@@ -6,7 +6,6 @@ import Loading from "../../Layout/Loading/Loading";
 import { RESEARCHER_QUERY } from "../utils/graphql/researcher.graphql";
 import "./detail.css";
 import phenomenon from "../../../models/phenomenon";
-import ResearcherList from "../ResearcherList/ResearcherList";
 
 export default function ResearcherDetail() {
   let { id } = useParams();
@@ -65,7 +64,7 @@ export default function ResearcherDetail() {
                 {` ${firstName} ${lastName}`}
               </p>
               <p>
-                <Icon name="info circle" />
+                <Icon name="birthday cake" />
                 {age}
               </p>
               <p>
@@ -92,7 +91,10 @@ export default function ResearcherDetail() {
               >
                 {phenomena.map((phenomenon: phenomenon) => {
                   return (
-                    <Link to={`/phenomena/${phenomenon.id}`}>
+                    <Link
+                      to={`/phenomena/${phenomenon.id}`}
+                      key={phenomenon.id}
+                    >
                       <p style={{ color: "white", fontStyle: "bold" }}>
                         {phenomenon.title}
                       </p>
