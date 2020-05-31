@@ -1,18 +1,11 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Image,
-  Segment,
-  Input,
-} from "semantic-ui-react";
+import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "./types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../../context/auth/AuthContext";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("Required"),
@@ -22,14 +15,10 @@ const validationSchema = Yup.object().shape({
 function LoginForm() {
   const history = useHistory();
   const [signIn] = useMutation(LOGIN);
-  const {
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    values,
-    setFieldValue,
-    errors,
-  } = useFormik({
+  const { login } = useAuth();
+  let dataLogin = { accessToken: "", researcherId: "", type: "" };
+
+  const { handleBlur, handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -41,15 +30,18 @@ function LoginForm() {
           ...values,
         },
         update(cache, { data }) {
-          console.log(data);
-          localStorage.setItem("token", data.login.accessToken);
-          localStorage.setItem("researcherId", data.login.researcherId);
+          dataLogin = data.login;
+          loginAuth(dataLogin);
         },
       });
       resetForm();
       history.push("/");
     },
   });
+
+  function loginAuth(param: any) {
+    login(dataLogin.accessToken, dataLogin.researcherId, dataLogin.type);
+  }
 
   return (
     <Grid
@@ -63,7 +55,7 @@ function LoginForm() {
           <Header as="h2" color="teal" textAlign="center">
             <Image src="/logo192.png" /> Log-in to your account
           </Header>
-          <Form size="large" onSubmit={handleSubmit} ce>
+          <Form size="large" onSubmit={handleSubmit}>
             <Segment stacked>
               <Form.Input
                 fluid
