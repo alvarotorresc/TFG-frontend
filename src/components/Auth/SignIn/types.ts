@@ -13,6 +13,13 @@ export const LOGIN = gql`
     ){
       accessToken
       researcherId
+      type
     }
+  }
+`
+
+export const LOGOUT = gql`
+  mutation logout{
+    logout
   }
 `
