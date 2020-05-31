@@ -38,8 +38,6 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function CreateResearcher() {
-  let isError = false;
-
   const [addResearcher] = useMutation(ADD_RESEARCHER, {
     onError: (error) => {
       alert(error.graphQLErrors[0].message);
@@ -90,7 +88,6 @@ export default function CreateResearcher() {
           onBlur={handleBlur}
           value={values.firstName}
           name="firstName"
-          pattern="[a-z]"
         />
         <Form.Input
           type="text"

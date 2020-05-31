@@ -91,7 +91,7 @@ export default function LoggedInRoutesComponent() {
           <Route exact strict path="/signin" component={LoginForm} />
           <Route exact strict path="/posts" component={PostList} />
           <Route exact strict path="/" component={Landing} />
-          <Route exact strict render={() => <Redirect to="/" />} />
+          <Route exact strict render={() => <Redirect to="/signin" />} />
         </Switch>
       )}
     </AuthContext.Consumer>

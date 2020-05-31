@@ -10,6 +10,7 @@ import Loading from "../../Layout/Loading/Loading";
 import {
   UPDATE_RESEARCHER,
   RESEARCHER_QUERY,
+  RESEARCHERS_QUERY,
 } from "../utils/graphql/researcher.graphql";
 
 const stringRegex = /[^A-Z][a-z]/;
@@ -41,7 +42,13 @@ export default function EditResearcher() {
 
   let history = useHistory();
 
-  const [updateResearcher] = useMutation(UPDATE_RESEARCHER);
+  const [updateResearcher] = useMutation(UPDATE_RESEARCHER, {
+    onError: (error) => {
+      alert(error.graphQLErrors[0].message);
+    },
+    onCompleted: () => history.push("/researchers"),
+    refetchQueries: [{ query: RESEARCHERS_QUERY }],
+  });
   const [researcher, setresearcher] = useState(Object);
 
   const { data, loading, refetch } = useQuery(RESEARCHER_QUERY, {
@@ -78,8 +85,6 @@ export default function EditResearcher() {
           ...values,
         },
       });
-      resetForm();
-      history.push("/researchers");
     },
   });
 
