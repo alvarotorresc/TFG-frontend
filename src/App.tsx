@@ -2,7 +2,6 @@ import React from "react";
 import Header from "./components/Layout/Header/Header";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-import RoutesComponent from "./Routes/routes";
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,6 +9,9 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/link-context";
+import AuthProvider, { AuthContext } from "./context/auth/AuthContext";
+import LoggedInRoutesComponent from "./Routes/loggedIn.routes";
+import LogoutRoutesComponent from "./Routes/logout.routes";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:5000/graphql",
@@ -36,8 +38,18 @@ function App() {
     <ApolloProvider client={client}>
       <div className="App">
         <BrowserRouter>
-          <Header />
-          <RoutesComponent />
+          <AuthProvider>
+            <Header />
+            <AuthContext.Consumer>
+              {(auth) => {
+                if (auth.loggedIn) {
+                  return <LoggedInRoutesComponent />;
+                } else {
+                  return <LogoutRoutesComponent />;
+                }
+              }}
+            </AuthContext.Consumer>
+          </AuthProvider>
         </BrowserRouter>
       </div>
     </ApolloProvider>
