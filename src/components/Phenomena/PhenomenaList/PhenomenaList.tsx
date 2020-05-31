@@ -8,6 +8,7 @@ import {
   Types,
 } from "../../Phenomena/utils/Phenomena.types";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/auth/AuthContext";
 
 function ToArray(type: any) {
   return Object.keys(type).map((key) => type[key]);
@@ -53,50 +54,72 @@ function PhenomenaList({ phenomena, handleDelete, refetch }: any) {
   }
 
   return (
-    <div>
-      <Header as="h1" icon textAlign="center" style={{ paddingTop: "30px" }}>
-        <Icon name="image outline" circular />
-        <Header.Content>Phenomena List</Header.Content>
-      </Header>
-      <Button as={Link} to="/phenomenon/create">
-        Create
-      </Button>
-      <Button onClick={order} icon labelPosition="right">
-        {isOrdered ? (
-          <Icon name="arrow circle up" />
-        ) : (
-          <Icon name="arrow circle down" />
-        )}
-        order
-      </Button>
-      <select className="select-css" onChange={filter}>
-        <option value="" label="Select a type" />
-        {typeOptions.map((option) => {
-          return <option value={`${option}`}>{option}</option>;
-        })}
-      </select>
-      <Grid style={{ padding: "4%" }} columns={2} stackable>
-        <Grid.Row>
-          {phenomenaState.map(
-            ({ id, description, type, researcher, title }: PhenomenaProps) => {
-              return (
-                <Grid.Column width={8} key={id}>
-                  <Phenomenon
-                    id={id}
-                    key={id}
-                    description={description}
-                    type={type}
-                    researcher={researcher}
-                    title={title}
-                    handleDelete={handleDelete}
-                  ></Phenomenon>
-                </Grid.Column>
-              );
-            }
+    <AuthContext.Consumer>
+      {(auth) => (
+        <div>
+          <Header
+            as="h1"
+            icon
+            textAlign="center"
+            style={{ paddingTop: "30px" }}
+          >
+            <Icon name="image outline" circular />
+            <Header.Content>Phenomena List</Header.Content>
+          </Header>
+          {auth.loggedIn && (
+            <Button as={Link} to="/phenomenon/create">
+              Create
+            </Button>
           )}
-        </Grid.Row>
-      </Grid>
-    </div>
+
+          <Button onClick={order} icon labelPosition="right">
+            {isOrdered ? (
+              <Icon name="arrow circle up" />
+            ) : (
+              <Icon name="arrow circle down" />
+            )}
+            order
+          </Button>
+          <select className="select-css" onChange={filter}>
+            <option value="" label="Select a type" key="blanck" />
+            {typeOptions.map((option) => {
+              return (
+                <option value={`${option}`} key={option}>
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+          <Grid style={{ padding: "4%" }} columns={2} stackable>
+            <Grid.Row>
+              {phenomenaState.map(
+                ({
+                  id,
+                  description,
+                  type,
+                  researcher,
+                  title,
+                }: PhenomenaProps) => {
+                  return (
+                    <Grid.Column width={8} key={id}>
+                      <Phenomenon
+                        id={id}
+                        key={id}
+                        description={description}
+                        type={type}
+                        researcher={researcher}
+                        title={title}
+                        handleDelete={handleDelete}
+                      ></Phenomenon>
+                    </Grid.Column>
+                  );
+                }
+              )}
+            </Grid.Row>
+          </Grid>
+        </div>
+      )}
+    </AuthContext.Consumer>
   );
 }
 
