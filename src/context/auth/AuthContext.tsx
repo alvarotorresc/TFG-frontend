@@ -106,4 +106,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 }
 
+window.addEventListener("beforeunload", (ev) => {
+  ev.preventDefault();
+  localStorage.removeItem(AUTH_ROL_KEY);
+  localStorage.removeItem(AUTH_RESEARCHERID_KEY);
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+});
+
 export default AuthProvider;

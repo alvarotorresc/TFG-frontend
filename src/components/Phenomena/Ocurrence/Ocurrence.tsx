@@ -7,9 +7,9 @@ import { AuthContext } from "../../../context/auth/AuthContext";
 
 function seeCorrectDate(date: Date) {
   let stringDate = String(date);
+  console.log(date);
   let day = stringDate.substring(0, 10);
-  let time = stringDate.substring(11, 16);
-  stringDate = `${day} /  ${time}h`;
+  stringDate = `${day}`;
   return stringDate;
 }
 
@@ -36,6 +36,7 @@ export default function Ocurrence({
   date,
   description,
   witness,
+  city,
   resolved,
   handleDelete,
   editable,
@@ -67,6 +68,9 @@ export default function Ocurrence({
                 Is resolved?
                 {seeCorrectBoolean(resolved)}
               </div>
+            </Card.Content>
+            <Card.Content extra>
+              <div style={{ fontSize: "20px", color: "black" }}>{city}</div>
             </Card.Content>
             {auth.loggedIn && editable && (
               <Card.Content extra>

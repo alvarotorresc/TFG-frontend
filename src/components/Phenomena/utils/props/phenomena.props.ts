@@ -18,6 +18,7 @@ export type OcurrencesProps = {
     description: string,
     witness: boolean,
     resolved: boolean,
-    editable: boolean
+    editable: boolean,
+    city: string,
     handleDelete: (id: any) => void
 }

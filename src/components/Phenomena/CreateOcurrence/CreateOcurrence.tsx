@@ -1,12 +1,20 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
-import { Form, Button, Grid, Checkbox, TextArea } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  Grid,
+  Checkbox,
+  TextArea,
+  Select,
+} from "semantic-ui-react";
 import * as Yup from "yup";
 import { CREATE_OCURRENCE } from "../utils/graphql/phenomena.graphql";
-import { DateTimeInput } from "semantic-ui-calendar-react";
+import { DateInput } from "semantic-ui-calendar-react";
 import "./createocurrence.css";
 import { useHistory, useParams } from "react-router-dom";
+import { spainCities } from "../utils/Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   description: Yup.string()
@@ -14,6 +22,7 @@ const validationSchema = Yup.object().shape({
     .max(200, "Too Long!")
     .required("Required"),
   date: Yup.date().required(),
+  city: Yup.string().required("Required"),
 });
 
 export default function CreateOcurrence() {
@@ -38,6 +47,7 @@ export default function CreateOcurrence() {
       witness: false,
       resolved: false,
       date: "",
+      city: "",
     },
     validationSchema,
     onSubmit(values, { resetForm }) {
@@ -68,16 +78,16 @@ export default function CreateOcurrence() {
         </span>
 
         <br />
-        <DateTimeInput
+        <DateInput
           name="date"
           closable
-          placeholder="Date Time"
+          placeholder="Date"
           value={values.date}
-          dateTimeFormat={"YYYY-MM-DD HH:MM:SS UTC"}
+          dateFormat={"YYYY-MM-DD"}
           iconPosition="left"
           style={{ marginLeft: "1px" }}
           onChange={(e, { name, value }) =>
-            setFieldValue(name, new Date(value).toISOString())
+            setFieldValue(name, new Date(value))
           }
         />
         <span className="error">
@@ -103,6 +113,18 @@ export default function CreateOcurrence() {
           name="resolved"
           className="input"
         />
+        <br />
+        <select
+          name="city"
+          value={values.city}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        >
+          <option value="" label="Select a city where occurs" />
+          {spainCities.map((option) => {
+            return <option value={`${option}`} label={`${option}`}></option>;
+          })}
+        </select>
         <br />
         <Button type="submit" style={{ margin: "50px" }} size="big">
           Submit

@@ -14,7 +14,16 @@ const validationSchema = Yup.object().shape({
 
 function LoginForm() {
   const history = useHistory();
-  const [signIn] = useMutation(LOGIN);
+  const [signIn] = useMutation(LOGIN, {
+    onError: (error) => {
+      if (error.graphQLErrors[0].message === "unknown_credentials") {
+        alert("ERROR EN LAS CREDENCIALES");
+      }
+    },
+    onCompleted: () => {
+      history.push("/");
+    },
+  });
   const { login } = useAuth();
   let dataLogin = { accessToken: "", researcherId: "", type: "" };
 
@@ -34,8 +43,6 @@ function LoginForm() {
           loginAuth(dataLogin);
         },
       });
-      resetForm();
-      history.push("/");
     },
   });
 

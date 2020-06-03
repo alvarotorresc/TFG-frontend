@@ -116,6 +116,7 @@ export default function PhenomenonDetail() {
                     <Grid.Row centered stretched key={ocurrence.id}>
                       <Ocurrence
                         id={ocurrence.id}
+                        city={ocurrence.city}
                         editable={auth.researcherId === researcher.id}
                         date={ocurrence.date}
                         ubication={ocurrence.ubication}

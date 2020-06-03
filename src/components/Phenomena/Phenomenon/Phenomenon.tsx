@@ -65,37 +65,40 @@ export default function Phenomenon({
             <Card.Description style={{ marginTop: "45px" }}>
               {description}
             </Card.Description>
-            {auth.loggedIn && auth.researcherId === researcher.id && (
-              <Card.Content extra>
-                <div className="ui two buttons delete">
-                  <Button
-                    basic
-                    color="red"
-                    style={{ marginTop: "10px" }}
-                    className="delete"
-                    onClick={() => setOpen(!isOpen)}
-                  >
-                    Delete
-                  </Button>
-                  <Confirm
-                    open={isOpen}
-                    onCancel={() => setOpen(!isOpen)}
-                    onConfirm={deleteResearcher}
-                    content={`Are you sure you want to delete the phenomenon: ${title}`}
-                  />
-                  <Button
-                    as={Link}
-                    basic
-                    color="blue"
-                    style={{ marginTop: "10px" }}
-                    className="delete"
-                    to={{ pathname: `/phenomenon/edit/${id} ` }}
-                  >
-                    Edit
-                  </Button>
-                </div>
-              </Card.Content>
-            )}
+            {auth.loggedIn &&
+              (auth.researcherId === researcher.id ||
+                auth.type === "admin") && (
+                <Card.Content extra>
+                  <div className="ui two buttons delete">
+                    <Button
+                      basic
+                      color="red"
+                      style={{ marginTop: "10px" }}
+                      className="delete"
+                      onClick={() => setOpen(!isOpen)}
+                    >
+                      Delete
+                    </Button>
+                    <Confirm
+                      open={isOpen}
+                      onCancel={() => setOpen(!isOpen)}
+                      onConfirm={deleteResearcher}
+                      content={`Are you sure you want to delete the phenomenon: ${title}
+                      Warning: If there are any ocurrence, these will be deleted too`}
+                    />
+                    <Button
+                      as={Link}
+                      basic
+                      color="blue"
+                      style={{ marginTop: "10px" }}
+                      className="delete"
+                      to={{ pathname: `/phenomenon/edit/${id} ` }}
+                    >
+                      Edit
+                    </Button>
+                  </div>
+                </Card.Content>
+              )}
           </Card.Content>
         </Card>
       )}

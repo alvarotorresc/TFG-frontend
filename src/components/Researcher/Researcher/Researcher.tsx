@@ -5,10 +5,10 @@ import "./researcher.css";
 import { CardProps } from "../utils/props/researcher.props";
 import { AuthContext } from "../../../context/auth/AuthContext";
 
-function nameLink(name: string, id: number) {
+function nameLink(name: string, id: string) {
   return (
     <div>
-      <Link to={{ pathname: `/researchers/${id} ` }} id="linkName">
+      <Link to={{ pathname: `/researchers/${id}` }} id="linkName">
         {name}
       </Link>
     </div>
@@ -47,23 +47,32 @@ export default function Researcher({
             <div>
               <Icon name="mail" />
               {email}
-              {auth.loggedIn && auth.type === "admin" && (
-                <div className="ui two buttons delete">
-                  <Button
-                    basic
-                    color="red"
-                    style={{ marginTop: "10px" }}
-                    className="delete"
-                    onClick={() => setOpen(!isOpen)}
-                  >
-                    Delete
-                  </Button>
-                  <Confirm
-                    open={isOpen}
-                    onCancel={() => setOpen(!isOpen)}
-                    onConfirm={deleteResearcher}
-                    content={`Are you sure you want to delete the researcher: ${name}`}
-                  />
+
+              <div className="ui two buttons delete">
+                {auth.loggedIn &&
+                  auth.type === "admin" &&
+                  phenomena.length === 0 &&
+                  auth.researcherId !== id && (
+                    <div className="ui two buttons delete">
+                      <Button
+                        basic
+                        color="red"
+                        style={{ marginTop: "10px" }}
+                        className="delete"
+                        onClick={() => setOpen(!isOpen)}
+                      >
+                        Delete
+                      </Button>
+                      <Confirm
+                        open={isOpen}
+                        onCancel={() => setOpen(!isOpen)}
+                        onConfirm={deleteResearcher}
+                        content={`Are you sure you want to delete the researcher: ${name}`}
+                      />
+                    </div>
+                  )}
+
+                {auth.loggedIn && auth.type === "admin" && (
                   <Button
                     as={Link}
                     basic
@@ -74,8 +83,8 @@ export default function Researcher({
                   >
                     Edit
                   </Button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           }
           centered
