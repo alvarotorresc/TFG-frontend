@@ -3,17 +3,18 @@ import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
 import {
   Form,
-  Input,
   Button,
   Grid,
   Checkbox,
   TextArea,
+  Select,
 } from "semantic-ui-react";
 import * as Yup from "yup";
 import { CREATE_OCURRENCE } from "../utils/graphql/phenomena.graphql";
-import { DateTimeInput } from "semantic-ui-calendar-react";
+import { DateInput } from "semantic-ui-calendar-react";
 import "./createocurrence.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { spainCities } from "../utils/Phenomena.types";
 
 const validationSchema = Yup.object().shape({
   description: Yup.string()
@@ -21,10 +22,15 @@ const validationSchema = Yup.object().shape({
     .max(200, "Too Long!")
     .required("Required"),
   date: Yup.date().required(),
+  city: Yup.string().required("Required"),
 });
 
 export default function CreateOcurrence() {
   let history = useHistory();
+
+  let { phenomenonId } = useParams();
+  let id = String(phenomenonId);
+  id = id.trim();
 
   const [createPhenomenon] = useMutation(CREATE_OCURRENCE);
   const {
@@ -37,14 +43,14 @@ export default function CreateOcurrence() {
   } = useFormik({
     initialValues: {
       description: "",
-      phenomenaId: "",
+      phenomenaId: id,
       witness: false,
       resolved: false,
       date: "",
+      city: "",
     },
     validationSchema,
     onSubmit(values, { resetForm }) {
-      console.log(values);
       createPhenomenon({
         variables: {
           ...values,
@@ -58,19 +64,6 @@ export default function CreateOcurrence() {
     <Grid centered textAlign="center" id="grid">
       <Form onSubmit={handleSubmit} size={"huge"}>
         <h1>Create a new Ocurrence</h1>
-        <Input
-          type="text"
-          placeholder={"ID"}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.phenomenaId}
-          name="phenomenaId"
-          className="input"
-        />
-        <span className="error">
-          {errors.phenomenaId ? errors.phenomenaId : null}
-        </span>
-        <br />
         <TextArea
           type="textarea"
           placeholder={"Description"}
@@ -85,15 +78,16 @@ export default function CreateOcurrence() {
         </span>
 
         <br />
-        <DateTimeInput
+        <DateInput
           name="date"
           closable
-          placeholder="Date Time"
+          placeholder="Date"
           value={values.date}
-          dateTimeFormat={"YYYY-MM-DD HH:MM:SS UTC"}
+          dateFormat={"YYYY-MM-DD"}
           iconPosition="left"
+          style={{ marginLeft: "1px" }}
           onChange={(e, { name, value }) =>
-            setFieldValue(name, new Date(value).toISOString())
+            setFieldValue(name, new Date(value))
           }
         />
         <span className="error">
@@ -119,6 +113,18 @@ export default function CreateOcurrence() {
           name="resolved"
           className="input"
         />
+        <br />
+        <select
+          name="city"
+          value={values.city}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        >
+          <option value="" label="Select a city where occurs" />
+          {spainCities.map((option) => {
+            return <option value={`${option}`} label={`${option}`}></option>;
+          })}
+        </select>
         <br />
         <Button type="submit" style={{ margin: "50px" }} size="big">
           Submit

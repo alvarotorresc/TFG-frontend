@@ -36,6 +36,7 @@ export const PHENOMENON_QUERY = gql`
         description
         witness
         resolved
+        city
       }
     }
   }
@@ -48,6 +49,7 @@ export const OCURRENCE_QUERY = gql`
       description
       witness
       resolved
+      city
       phenomena {
         id
         title
@@ -83,6 +85,7 @@ export const CREATE_OCURRENCE = gql`
     $date: Date!
     $description: String!
     $witness: Boolean!
+    $city: String!
     $resolved: Boolean!
   ) {
     createOcurrence(
@@ -92,6 +95,7 @@ export const CREATE_OCURRENCE = gql`
         description: $description
         witness: $witness
         resolved: $resolved
+        city: $city
       }
     ) {
       id
@@ -125,6 +129,7 @@ export const UPDATE_OCURRENCE = gql`
     $description: String!
     $witness: Boolean!
     $resolved: Boolean!
+    $city: String!
   ) {
     updateOcurrence (
       dto: {
@@ -133,6 +138,7 @@ export const UPDATE_OCURRENCE = gql`
         description: $description
         witness: $witness
         resolved: $resolved
+        city: $city
       }
     ){
       id

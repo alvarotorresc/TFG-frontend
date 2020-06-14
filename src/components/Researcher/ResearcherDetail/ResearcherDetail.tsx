@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { Grid, Header, Icon, Image } from "semantic-ui-react";
+import { Grid, Header, Icon, Image, Button } from "semantic-ui-react";
 import Loading from "../../Layout/Loading/Loading";
 import { RESEARCHER_QUERY } from "../utils/graphql/researcher.graphql";
 import "./detail.css";
@@ -16,8 +16,6 @@ export default function ResearcherDetail() {
   const { data, loading, error } = useQuery(RESEARCHER_QUERY, {
     variables: { id },
   });
-
-  console.log(loading, error, data, researcher, id);
 
   useEffect(() => {
     if (!loading && data) {
@@ -66,7 +64,7 @@ export default function ResearcherDetail() {
                 {` ${firstName} ${lastName}`}
               </p>
               <p>
-                <Icon name="info circle" />
+                <Icon name="birthday cake" />
                 {age}
               </p>
               <p>
@@ -93,7 +91,10 @@ export default function ResearcherDetail() {
               >
                 {phenomena.map((phenomenon: phenomenon) => {
                   return (
-                    <Link to={`/phenomena/${phenomenon.id}`}>
+                    <Link
+                      to={`/phenomena/${phenomenon.id}`}
+                      key={phenomenon.id}
+                    >
                       <p style={{ color: "white", fontStyle: "bold" }}>
                         {phenomenon.title}
                       </p>
@@ -108,5 +109,12 @@ export default function ResearcherDetail() {
     );
   }
 
-  return <p>p</p>;
+  return (
+    <div style={{ padding: "20%" }}>
+      <h1>No one researcher with this ID</h1>
+      <Button as={Link} to="/researchers">
+        Go ResearcherList
+      </Button>
+    </div>
+  );
 }

@@ -1,7 +1,7 @@
 import researcher from "../../../../models/researcher";
 
 export type ResearcherProps = {
-    id: number;
+    id: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -14,7 +14,7 @@ export type ResearcherProps = {
 };
 
 export type CardProps = {
-    id: number;
+    id: string;
     name: string;
     email: string;
     age: number;

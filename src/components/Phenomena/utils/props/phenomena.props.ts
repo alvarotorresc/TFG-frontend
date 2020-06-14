@@ -17,6 +17,8 @@ export type OcurrencesProps = {
     ubication: JSON,
     description: string,
     witness: boolean,
-    resolved: boolean
+    resolved: boolean,
+    editable: boolean,
+    city: string,
     handleDelete: (id: any) => void
 }

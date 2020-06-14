@@ -1,23 +1,29 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
-import { Form, Input, Button, Grid } from "semantic-ui-react";
+import { Form, Button, Grid } from "semantic-ui-react";
 import * as Yup from "yup";
 import { urlImages } from "../utils/researcher.utils";
 import "./createresearcher.css";
 import { useHistory } from "react-router-dom";
-import { ADD_RESEARCHER } from "../utils/graphql/researcher.graphql";
-import { onError } from "@apollo/link-error";
+import {
+  ADD_RESEARCHER,
+  RESEARCHERS_QUERY,
+} from "../utils/graphql/researcher.graphql";
+
+const stringRegex = /[^A-Z][a-z]/;
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
-    .required("Required"),
+    .required("Required")
+    .matches(stringRegex, "not valid"),
   lastName: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
-    .required("Required"),
+    .required("Required")
+    .matches(stringRegex, "not valid"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .min(6, "Too Short!")
@@ -26,24 +32,21 @@ const validationSchema = Yup.object().shape({
   nationality: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
-    .required("Required"),
+    .required("Required")
+    .matches(stringRegex, "not valid"),
   age: Yup.number().required("Required").positive("Positive"),
 });
 
 export default function CreateResearcher() {
-  const [addResearcher, { error: mutationError }] = useMutation(ADD_RESEARCHER);
+  const [addResearcher] = useMutation(ADD_RESEARCHER, {
+    onError: (error) => {
+      alert(error.graphQLErrors[0].message);
+    },
+    onCompleted: () => history.push("/researchers"),
+    refetchQueries: [{ query: RESEARCHERS_QUERY }],
+  });
 
   let history = useHistory();
-
-  onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
-      graphQLErrors.map(({ message, locations, path }) =>
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        )
-      );
-    if (networkError) console.log(`[Network error]: ${networkError}`);
-  });
 
   const {
     handleBlur,
@@ -64,15 +67,12 @@ export default function CreateResearcher() {
       image: "https://semantic-ui.com/images/avatar/large/steve.jpg",
     },
     validationSchema,
-    onSubmit(values, { resetForm }) {
-      console.log(values);
-      addResearcher({
+    async onSubmit(values, { resetForm }) {
+      await addResearcher({
         variables: {
           ...values,
         },
       });
-      resetForm();
-      history.push("/researchers");
     },
   });
 
@@ -80,76 +80,62 @@ export default function CreateResearcher() {
     <Grid centered textAlign="center" id="grid">
       <h1>Create a new Researcher</h1>
       <Form onSubmit={handleSubmit} size={"huge"}>
-        <Input
+        <Form.Input
           type="text"
+          error={errors.firstName ? errors.firstName : null}
           placeholder={"First Name"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.firstName}
           name="firstName"
-          className="input"
         />
-        <span className="error">
-          {errors.firstName ? errors.firstName : null}
-        </span>
-        <Input
+        <Form.Input
           type="text"
+          error={errors.lastName ? errors.lastName : null}
           placeholder={"Last Name"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.lastName}
           name="lastName"
-          className="input"
         />
-        <span className="error">
-          {errors.lastName ? errors.lastName : null}
-        </span>
         <br />
-        <Input
+        <Form.Input
           type="text"
+          error={errors.email ? errors.email : null}
           placeholder={"Email"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
           name="email"
-          className="input"
         />
-        <span className="error">{errors.email ? errors.email : null}</span>
-        <Input
+        <Form.Input
           type="password"
+          error={errors.password ? errors.password : null}
           placeholder={"Password"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
           name="password"
-          className="input"
         />
-        <span className="error">
-          {errors.password ? errors.password : null}
-        </span>
         <br />
-        <Input
+        <Form.Input
           type="text"
+          error={errors.nationality ? errors.nationality : null}
           placeholder={"Nationality"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.nationality}
           name="nationality"
-          className="input"
         />
-        <span className="error">
-          {errors.nationality ? errors.nationality : null}
-        </span>
-        <Input
+        <Form.Input
           type="number"
+          error={errors.age ? errors.age : null}
           placeholder={"Age"}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.age}
           name="age"
-          className="input"
         />
-        <span className="error">{errors.age ? errors.age : null}</span>
         <br></br>
         <label htmlFor="Rol">
           <h1>Select a Rol</h1>
@@ -161,10 +147,10 @@ export default function CreateResearcher() {
           id="admin"
           name="rol"
           style={{ fontSize: "25px", marginTop: "10px " }}
-          onChange={() => setFieldValue("rol", "Admin")}
+          onChange={() => setFieldValue("rol", "admin")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "Admin"}
+          checked={values.rol === "admin"}
         ></Form.Radio>
         <Form.Radio
           type="radio"
@@ -172,10 +158,10 @@ export default function CreateResearcher() {
           name="rol"
           label="Researcher"
           style={{ fontSize: "25px" }}
-          onChange={() => setFieldValue("rol", "Researcher")}
+          onChange={() => setFieldValue("rol", "researcher")}
           onBlur={handleBlur}
           value={values.rol}
-          checked={values.rol === "Researcher"}
+          checked={values.rol === "researcher"}
         ></Form.Radio>
         <br></br>
         <label htmlFor="Rol">
